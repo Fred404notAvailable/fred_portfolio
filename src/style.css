@@ -15,8 +15,10 @@
         
         .liquid-btn { position: relative; overflow: hidden; }
         .liquid-btn::after { content: ''; position: absolute; bottom: -100%; left: 0; width: 100%; height: 100%; background: #00FF87; transition: bottom 0.4s ease; z-index: -1; }
-        .liquid-btn:hover::after { bottom: 0; }
-        .liquid-btn:hover span { color: #071009; }
+        @media (hover: hover) {
+            .liquid-btn:hover::after { bottom: 0; }
+            .liquid-btn:hover span { color: #071009; }
+        }
 
         .masked-text span { display: inline-block; transform: translateY(100%); transition: transform 0.6s cubic-bezier(0.2, 1, 0.3, 1); }
         .reveal span { transform: translateY(0); }
@@ -24,8 +26,10 @@
         .project-card { width: 100%; height: 50vh; min-height: 400px; position: relative; overflow: hidden; border: 1px solid rgba(241, 255, 239, 0.1); border-radius: 8px; transition: border-radius 0.6s cubic-bezier(0.2, 1, 0.3, 1), border-color 0.6s ease; }
         .project-img { position: absolute; inset: -20% 0; width: 100%; height: 140%; object-fit: cover; transition: filter 0.6s cubic-bezier(0.2, 1, 0.3, 1); filter: brightness(0.5) saturate(0.5); }
         
-        .project-card:hover { border-radius: 40px; border-color: rgba(0, 255, 135, 0.4); }
-        .project-card:hover .project-img { filter: brightness(1.1) saturate(1.2); }
+        @media (hover: hover) {
+            .project-card:hover { border-radius: 40px; border-color: rgba(0, 255, 135, 0.4); }
+            .project-card:hover .project-img { filter: brightness(1.1) saturate(1.2); }
+        }
 
         .marquee-container { white-space: nowrap; display: flex; overflow: hidden; }
         .marquee-content { display: flex; animation: marquee 20s linear infinite; }

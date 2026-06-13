@@ -1309,9 +1309,8 @@ import './style.css';
                     gsap.to(lines[1], { y: -5, rotation: -45, duration: 0.3, ease: 'power2.inOut' });
                     
                     // Show menu
-                    mobileMenu.classList.remove('pointer-events-none');
-                    mobileMenu.classList.remove('opacity-0');
-                    
+                    gsap.to(mobileMenu, { autoAlpha: 1, duration: 0.3 });
+
                     // Stagger links
                     gsap.fromTo(mobileNavLinks, 
                         { y: 30, opacity: 0 },
@@ -1325,8 +1324,8 @@ import './style.css';
                     gsap.to(lines[1], { y: 0, rotation: 0, duration: 0.3, ease: 'power2.inOut' });
                     
                     // Hide menu
-                    mobileMenu.classList.add('opacity-0');
-                    mobileMenu.classList.add('pointer-events-none');
+                    gsap.to(mobileMenu, { autoAlpha: 0, duration: 0.3 });
+
                     
                     // Start lenis scroll
                     lenis.start();
