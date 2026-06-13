@@ -446,12 +446,12 @@ import './style.css';
             scene.add(ambientLight);
 
             // Pulsing Point Light in the center
-            const pointLight = new THREE.PointLight(0x00FF87, 1.8, 900);
+            const pointLight = new THREE.PointLight(0x00FF87, 80000, 1500);
             pointLight.position.set(0, 200, 0);
             scene.add(pointLight);
 
             // Panning Spot Light (Searchlight sweeping the wireframe terrain)
-            const spotLight = new THREE.SpotLight(0x00FF87, 6, 1600, Math.PI / 5, 0.6, 1);
+            const spotLight = new THREE.SpotLight(0x00FF87, 250000, 2000, Math.PI / 5, 0.6, 1);
             spotLight.position.set(0, 800, 400);
             scene.add(spotLight);
             

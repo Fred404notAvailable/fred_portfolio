@@ -403,11 +403,11 @@ function initHeroThree() {
     const ambientLight = new THREE.AmbientLight(0x0c160e, 0.6);
     scene.add(ambientLight);
     // Pulsing Point Light in the center
-    const pointLight = new THREE.PointLight(0x00FF87, 1.8, 900);
+    const pointLight = new THREE.PointLight(0x00FF87, 80000, 1500);
     pointLight.position.set(0, 200, 0);
     scene.add(pointLight);
     // Panning Spot Light (Searchlight sweeping the wireframe terrain)
-    const spotLight = new THREE.SpotLight(0x00FF87, 6, 1600, Math.PI / 5, 0.6, 1);
+    const spotLight = new THREE.SpotLight(0x00FF87, 250000, 2000, Math.PI / 5, 0.6, 1);
     spotLight.position.set(0, 800, 400);
     scene.add(spotLight);
     const spotTarget = new THREE.Object3D();
@@ -678,6 +678,24 @@ initHeroThree();
 // Main Animations — full GSAP suite
 function initAnimations() {
     // ─────────────────────────────────────────────────────────────
+    // GEOLOCATION WIDGET
+    // ─────────────────────────────────────────────────────────────
+    const geoDisplay = document.getElementById('geo-location-display');
+    const geoStatus = document.getElementById('geo-status');
+    const geoIndicator = document.getElementById('geo-indicator');
+    if (geoDisplay && geoStatus && geoIndicator) {
+        // Using hardcoded Madurai location
+        setTimeout(() => {
+            geoIndicator.classList.remove('animate-pulse');
+            geoIndicator.style.boxShadow = '0 0 10px #00FF87';
+            const targetText = `9.9252° N, 78.1198° E // MADURAI_CORE`;
+            geoDisplay.innerText = targetText;
+            geoStatus.innerText = "SYS_STATUS: UPLINK_ESTABLISHED";
+            // Flash effect
+            gsap.fromTo(geoDisplay, { color: '#fff' }, { color: '#00FF87', duration: 1 });
+        }, 800);
+    }
+    // ─────────────────────────────────────────────────────────────
     // HERO
     // ─────────────────────────────────────────────────────────────
     // Words slide up from behind mask
@@ -727,53 +745,70 @@ function initAnimations() {
             scrub: true
         }
     });
-    // Horizontal Project Scroll
-    const wrapper = document.getElementById('scroll-wrapper');
-    const horizontalScroll = gsap.to(wrapper, {
-        x: () => -(wrapper.scrollWidth - window.innerWidth),
-        ease: "none",
-        scrollTrigger: {
-            trigger: "#work",
-            start: "top top",
-            end: () => "+=" + wrapper.scrollWidth,
-            scrub: 1,
-            pin: true,
-            anticipatePin: 1
+    // 2-Column Scale & Parallax
+    const rows = gsap.utils.toArray('.project-row');
+    rows.forEach((row, index) => {
+        const card = row.querySelector('.project-card');
+        const info = row.querySelector('.project-info');
+        const img = row.querySelector('.project-img');
+        // Clear any previous transform clutter
+        gsap.set([card, info, img], { clearProps: 'all' });
+        // Animate Card Entrance
+        if (card) {
+            gsap.fromTo(card, {
+                y: 100,
+                opacity: 0,
+                scale: 0.95,
+                filter: 'blur(5px)'
+            }, {
+                y: 0,
+                opacity: 1,
+                scale: 1,
+                filter: 'blur(0px)',
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: row,
+                    start: 'top 85%',
+                    end: 'top 50%',
+                    scrub: 1
+                }
+            });
         }
-    });
-    // Project Cards Horizontal Scroll containerAnimation
-    const cards = document.querySelectorAll('.project-card');
-    cards.forEach((card, index) => {
-        // Entrance animation as card enters screen from right
-        gsap.fromTo(card, { scale: 0.86, opacity: 0.3, y: 60, rotation: 1.5 }, {
-            scale: 1,
-            opacity: 1,
-            y: 0,
-            rotation: 0,
-            duration: 1,
-            ease: 'power2.out',
-            scrollTrigger: {
-                trigger: card,
-                containerAnimation: horizontalScroll,
-                start: 'left 95%',
-                end: 'left 50%',
-                scrub: true
-            }
-        });
-        // Exit animation as card exits screen to left
-        gsap.to(card, {
-            scale: 0.86,
-            opacity: 0.3,
-            y: -60,
-            rotation: -1.5,
-            scrollTrigger: {
-                trigger: card,
-                containerAnimation: horizontalScroll,
-                start: 'right 50%',
-                end: 'right 5%',
-                scrub: true
-            }
-        });
+        // Animate Typography Info Entrance Staggered
+        if (info) {
+            gsap.set(info, { perspective: 1000 }); // Add 3D perspective to parent
+            const textElements = info.children;
+            gsap.fromTo(textElements, {
+                y: 60,
+                opacity: 0,
+                rotationX: -30
+            }, {
+                y: 0,
+                opacity: 1,
+                rotationX: 0,
+                stagger: 0.15, // Creates the beautiful cascade effect
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: row,
+                    start: 'top 80%',
+                    end: 'top 30%',
+                    scrub: 1.5
+                }
+            });
+        }
+        // Subtle Image Parallax inside the card window
+        if (img) {
+            gsap.fromTo(img, { y: '-15%' }, {
+                y: '15%',
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: row,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: true
+                }
+            });
+        }
     });
     // Work title scroll reveal
     gsap.from('#projects-title', {
@@ -1056,7 +1091,45 @@ initContactTerminal();
 // Toast
 function showToast() {
     const toast = document.getElementById('toast');
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3000);
+    if (toast) {
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+}
+// Handle Contact Form Submission via FormSubmit AJAX
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // Optional: Change button text to indicate loading
+        const submitBtn = contactForm.querySelector('button[type="submit"] span');
+        const originalText = submitBtn ? submitBtn.innerText : 'SEND MESSAGE';
+        if (submitBtn)
+            submitBtn.innerText = 'TRANSMITTING...';
+        const formData = new FormData(contactForm);
+        fetch('https://formsubmit.co/ajax/afrederick0005@gmail.com', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json'
+            },
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+            showToast();
+            contactForm.reset();
+            if (submitBtn)
+                submitBtn.innerText = originalText;
+        })
+            .catch(error => {
+            console.error('Form submission error:', error);
+            if (submitBtn)
+                submitBtn.innerText = 'ERROR';
+            setTimeout(() => {
+                if (submitBtn)
+                    submitBtn.innerText = originalText;
+            }, 3000);
+        });
+    });
 }
 //# sourceMappingURL=main.js.map
