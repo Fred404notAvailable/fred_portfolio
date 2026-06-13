@@ -12,10 +12,13 @@ import './style.css';
         // Init GSAP
         gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
-        // Lenis Smooth Scroll
-        const lenis = new Lenis();
-        lenis.on('scroll', ScrollTrigger.update);
-        gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+        // Lenis Smooth Scroll (Disabled on mobile to let native iOS/Android hardware scrolling take over and fix stuttering)
+        let lenis: any = null;
+        if (!isTouchDevice) {
+            lenis = new Lenis();
+            lenis.on('scroll', ScrollTrigger.update);
+            gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+        }
         gsap.ticker.lagSmoothing(0);
 
         // Split Text Helper for Hero Headline
@@ -1337,7 +1340,7 @@ import './style.css';
                     );
                     
                     // Stop lenis scroll
-                    lenis.stop();
+                    if (lenis) lenis.stop();
                 } else {
                     gsap.to(lines[0], { y: 0, rotation: 0, duration: 0.3, ease: 'power2.inOut' });
                     gsap.to(lines[1], { y: 0, rotation: 0, duration: 0.3, ease: 'power2.inOut' });
@@ -1347,7 +1350,7 @@ import './style.css';
 
                     
                     // Start lenis scroll
-                    lenis.start();
+                    if (lenis) lenis.start();
                 }
             };
 
