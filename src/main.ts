@@ -7,6 +7,7 @@ import { TextPlugin } from 'gsap/TextPlugin';
 import Lenis from 'lenis';
 import './style.css';
 
+        const isTouchDevice = window.matchMedia("(pointer: coarse)").matches || window.innerWidth <= 768;
 
         // Init GSAP
         gsap.registerPlugin(ScrollTrigger, TextPlugin);
@@ -361,11 +362,11 @@ import './style.css';
             renderer.setSize(window.innerWidth, window.innerHeight);
             container.appendChild(renderer.domElement);
 
-            // 1. Denser Plane Geometry representing the floor terrain grid (100 x 100 segments)
+            // 1. Denser Plane Geometry representing the floor terrain grid
             const gridWidth = 3200;
             const gridHeight = 3200;
-            const widthSegs = 100;
-            const heightSegs = 100;
+            const widthSegs = isTouchDevice ? 30 : 100;
+            const heightSegs = isTouchDevice ? 30 : 100;
             const geometry = new THREE.PlaneGeometry(gridWidth, gridHeight, widthSegs, heightSegs);
             
             const posAttr = geometry.attributes.position;
@@ -410,8 +411,8 @@ import './style.css';
             // 2. Ceiling Grid Plane (Mirroring the floor corridor)
             const ceilWidth = 3200;
             const ceilHeight = 3200;
-            const ceilSegsX = 64;
-            const ceilSegsY = 64;
+            const ceilSegsX = isTouchDevice ? 20 : 64;
+            const ceilSegsY = isTouchDevice ? 20 : 64;
             const geometryCeil = new THREE.PlaneGeometry(ceilWidth, ceilHeight, ceilSegsX, ceilSegsY);
             
             const posAttrCeil = geometryCeil.attributes.position;
@@ -536,6 +537,7 @@ import './style.css';
             let localMousePoint = null;
 
             window.addEventListener('mousemove', (e) => {
+                if (isTouchDevice) return;
                 targetMouse.x = (e.clientX / window.innerWidth) * 2 - 1;
                 targetMouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
             });
@@ -1118,6 +1120,7 @@ import './style.css';
 
         // Project Card 3D Tilt Effect
         function initProjectCardTilt() {
+            if (isTouchDevice) return; // Disable heavy hover filters on mobile to guarantee smooth scroll
             const cards = document.querySelectorAll('.project-card');
             cards.forEach((card, index) => {
                 const setRotX = gsap.quickTo(card, 'rotationX', { duration: 0.4, ease: 'power2.out' });
@@ -1186,17 +1189,19 @@ import './style.css';
         }
 
         // Magnetic Logic
-        document.querySelectorAll('.magnetic-hover').forEach(btn => {
-            btn.addEventListener('mousemove', (e) => {
-                const rect = btn.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3 });
+        if (!isTouchDevice) {
+            document.querySelectorAll('.magnetic-hover').forEach(btn => {
+                btn.addEventListener('mousemove', (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3 });
+                });
+                btn.addEventListener('mouseleave', () => {
+                    gsap.to(btn, { x: 0, y: 0, duration: 0.3 });
+                });
             });
-            btn.addEventListener('mouseleave', () => {
-                gsap.to(btn, { x: 0, y: 0, duration: 0.3 });
-            });
-        });
+        }
 
         // ── Contact Form Keystroke Logger Terminal ──────────────────
         function initContactTerminal() {
