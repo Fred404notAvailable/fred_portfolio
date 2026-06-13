@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ALEX_DEV | Portfolio</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&amp;family=Space+Mono:wght@400;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@100..900&amp;family=Syne:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- External Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary": "#003919",
+                      "surface-variant": "#2d372e",
+                      "secondary-container": "#d4004b",
+                      "on-tertiary-fixed": "#241a00",
+                      "tertiary": "#fffaf7",
+                      "on-error": "#690005",
+                      "on-surface-variant": "#b9cbb9",
+                      "primary-fixed": "#60ff98",
+                      "surface-container": "#18221a",
+                      "tertiary-fixed-dim": "#e5c364",
+                      "primary-container": "#00ff87",
+                      "on-primary-fixed-variant": "#005227",
+                      "on-secondary-container": "#ffe6e8",
+                      "inverse-on-surface": "#29332a",
+                      "on-secondary": "#670020",
+                      "on-error-container": "#ffdad6",
+                      "surface-container-lowest": "#071009",
+                      "inverse-surface": "#dae6d8",
+                      "surface-container-high": "#222c24",
+                      "on-tertiary-fixed-variant": "#584400",
+                      "secondary": "#ffb2ba",
+                      "error-container": "#93000a",
+                      "error": "#ffb4ab",
+                      "on-primary-container": "#007138",
+                      "on-tertiary-container": "#795f01",
+                      "secondary-fixed-dim": "#ffb2ba",
+                      "tertiary-fixed": "#ffe08d",
+                      "on-surface": "#dae6d8",
+                      "background": "#0c160e",
+                      "on-secondary-fixed-variant": "#910030",
+                      "surface": "#0c160e",
+                      "on-background": "#dae6d8",
+                      "surface-bright": "#323c32",
+                      "surface-dim": "#0c160e",
+                      "primary": "#f1ffef",
+                      "outline-variant": "#3b4b3d",
+                      "outline": "#849585",
+                      "surface-container-low": "#141e16",
+                      "on-primary-fixed": "#00210c",
+                      "on-tertiary": "#3d2f00",
+                      "primary-fixed-dim": "#00e478",
+                      "surface-container-highest": "#2d372e",
+                      "on-secondary-fixed": "#400011",
+                      "surface-tint": "#00e478",
+                      "inverse-primary": "#006d36",
+                      "tertiary-container": "#ffdb79",
+                      "secondary-fixed": "#ffd9dc"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "section-gap-mobile": "80px",
+                      "margin-safe": "5vw",
+                      "base": "8px",
+                      "section-gap": "160px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Syne"],
+                      "body-lg": ["Syne"],
+                      "label-mono": ["Space Mono"],
+                      "label-mono-bold": ["Space Mono"],
+                      "body-sm": ["Syne"],
+                      "display-lg-mobile": ["Syne"],
+                      "display-lg": ["Syne"],
+                      "display-2xl": ["Syne"]
+              },
+              "fontSize": {
+                      "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "label-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "400"}],
+                      "label-mono-bold": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                      "body-sm": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                      "display-lg-mobile": ["48px", {"lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "display-lg": ["80px", {"lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "display-2xl": ["120px", {"lineHeight": "110px", "letterSpacing": "-0.04em", "fontWeight": "800"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body { background-color: #0c160e; overflow-x: hidden; cursor: none; }
+        .custom-cursor { pointer-events: none; position: fixed; top: 0; left: 0; z-index: 9999; }
+        .cursor-dot { width: 10px; height: 10px; background-color: #00FF87; border-radius: 50%; }
+        .cursor-circle { width: 40px; height: 40px; border: 1px solid #00FF87; border-radius: 50%; transition: transform 0.1s ease-out; }
+        
+        #preloader { position: fixed; inset: 0; background: #071009; z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .progress-bar { height: 2px; width: 0%; background: #00FF87; position: absolute; bottom: 0; left: 0; }
+        
+        .three-canvas { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+        
+        .liquid-btn { position: relative; overflow: hidden; }
+        .liquid-btn::after { content: ''; position: absolute; bottom: -100%; left: 0; width: 100%; height: 100%; background: #00FF87; transition: bottom 0.4s ease; z-index: -1; }
+        .liquid-btn:hover::after { bottom: 0; }
+        .liquid-btn:hover span { color: #071009; }
+
+        .masked-text span { display: inline-block; transform: translateY(100%); transition: transform 0.6s cubic-bezier(0.2, 1, 0.3, 1); }
+        .reveal span { transform: translateY(0); }
+
+        .horizontal-scroll { display: flex; flex-wrap: nowrap; width: 400vw; height: 100vh; align-items: center; }
+        .project-card { width: 70vw; height: 80vh; flex-shrink: 0; margin: 0 5vw; position: relative; overflow: hidden; border: 1px solid rgba(241, 255, 239, 0.1); }
+        .project-img { position: absolute; inset: -20%; width: 140%; height: 140%; object-fit: cover; filter: grayscale(100%) contrast(1.2); transition: filter 0.5s ease; }
+        .project-card:hover .project-img { filter: grayscale(0%) contrast(1); }
+
+        .marquee-container { white-space: nowrap; display: flex; overflow: hidden; }
+        .marquee-content { display: flex; animation: marquee 20s linear infinite; }
+        .marquee-content.reverse { animation-direction: reverse; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        .line-clamp { border-bottom: 1px solid rgba(132, 149, 133, 0.3); }
+        .line-clamp:focus-within { border-bottom: 1px solid #00FF87; }
+
+        .toast { position: fixed; bottom: 40px; right: 40px; background: #00FF87; color: #071009; padding: 12px 24px; border-radius: 4px; transform: translateY(200%); transition: transform 0.3s ease; }
+        .toast.show { transform: translateY(0); }
+        
+        .magnetic-hover { display: inline-block; transition: transform 0.3s ease-out; }
+    </style>
+</head>
+<body class="text-primary selection:bg-primary-container selection:text-on-primary-container">
+<!-- Custom Cursor -->
+<div class="custom-cursor hidden md:block">
+<div class="cursor-dot fixed -translate-x-1/2 -translate-y-1/2"></div>
+<div class="cursor-circle fixed -translate-x-1/2 -translate-y-1/2 mix-blend-difference"></div>
+</div>
+<!-- Preloader -->
+<div id="preloader">
+<div class="absolute inset-0 opacity-10 font-label-mono text-primary text-[10px] pointer-events-none p-4 leading-none overflow-hidden" id="ascii-drift"></div>
+<div class="flex flex-col items-center">
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary-container" id="load-counter">0</h1>
+<p class="font-label-mono text-outline uppercase tracking-[0.5em] mt-4">Initializing Systems</p>
+</div>
+<div class="progress-bar" id="load-bar"></div>
+</div>
+<!-- Global Progress -->
+<div class="fixed top-0 left-0 w-full h-[2px] bg-white/5 z-[60]">
+<div class="h-full bg-primary-container w-0" id="scroll-progress"></div>
+</div>
+<!-- Navigation -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-safe py-gutter border-b border-outline-variant/20 bg-transparent mix-blend-difference">
+<a class="font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-primary tracking-tighter magnetic-hover" href="#">ALEX_DEV</a>
+<nav class="hidden md:flex gap-12">
+<a class="magnetic-hover text-primary font-label-mono hover:text-primary-container transition-colors duration-300" href="#work">WORK</a>
+<a class="magnetic-hover text-primary font-label-mono hover:text-primary-container transition-colors duration-300" href="#expertise">EXPERTISE</a>
+<a class="magnetic-hover text-primary font-label-mono hover:text-primary-container transition-colors duration-300" href="#contact">CONTACT</a>
+</nav>
+<button class="liquid-btn border border-primary px-8 py-3 font-label-mono-bold text-label-mono-bold magnetic-hover">RESUME</button>
+</header>
+<main id="content">
+<!-- Hero Section -->
+<section class="relative h-screen flex flex-col justify-center px-margin-safe overflow-hidden">
+<div class="three-canvas" id="hero-canvas"></div>
+<div class="max-w-6xl">
+<p class="font-label-mono text-primary-container mb-4 reveal-stagger">EST. 2018 / FULL-STACK ARCHITECT</p>
+<h1 class="font-display-2xl text-[64px] md:text-display-2xl leading-[0.9] text-primary mb-12" id="hero-headline">CRAFTING<br/>DIGITAL<br/>WORLDS</h1>
+<div class="reveal-stagger">
+<button class="liquid-btn bg-transparent border border-primary-container text-primary-container px-10 py-5 font-label-mono-bold text-lg group">
+<span class="relative z-10 transition-colors duration-300">VIEW MY WORK</span>
+</button>
+</div>
+</div>
+<div class="absolute bottom-12 right-margin-safe flex flex-col items-end">
+<span class="font-label-mono text-outline text-xs rotate-90 origin-right translate-y-12 mb-16">SCROLL TO EXPLORE</span>
+<div class="w-[1px] h-24 bg-gradient-to-b from-primary-container to-transparent"></div>
+</div>
+</section>
+<!-- About Section -->
+<section class="min-h-screen py-section-gap px-margin-safe flex flex-col md:flex-row items-center gap-gutter relative" id="about">
+<div class="absolute left-0 top-1/4 -translate-x-1/3 opacity-5 font-display-2xl text-[400px] pointer-events-none select-none">01</div>
+<div class="w-full md:w-1/2 flex justify-center">
+<div class="relative w-full max-w-md aspect-square">
+<svg class="w-full h-full" viewbox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+<path d="M44.7,-76.4C58.1,-69.2,69.2,-58.1,77.3,-44.7C85.4,-31.3,90.5,-15.7,89.3,-0.7C88.1,14.3,80.6,28.6,71.5,41.2C62.4,53.8,51.8,64.7,39,72.4C26.2,80.1,13.1,84.6,-0.7,85.8C-14.5,87,-29,84.9,-42.2,78.2C-55.4,71.5,-67.3,60.2,-75.4,46.6C-83.5,33,-87.8,17.1,-87.4,1.4C-87,-14.3,-81.9,-29.8,-73.2,-43.3C-64.5,-56.8,-52.2,-68.3,-38.3,-75C-24.4,-81.7,-12.2,-83.6,1.4,-86.1C15.1,-88.6,30.2,-83.6,44.7,-76.4Z" fill="#00FF87" id="morph-blob" transform="translate(100 100)"></path>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<img class="w-64 h-64 object-cover rounded-full mix-blend-multiply opacity-80" data-alt="Close up professional portrait of a creative developer with short dark hair, wearing a black turtleneck. The lighting is cinematic, high-contrast, and focused, casting subtle shadows that emphasize facial structure against a deep, dark forest-green studio background. The style is moody and sophisticated, matching a premium technical aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkv7eiqHNZjafv7uS7uaagvnMeCkpho6Mtm0a21GW9gj0D1nEKTay8jM0phVeEpwDuGadgbnCiZnDiO3yhfhe_pq4WOD--M1FTmObSHvww2CTbOFUXoUS2dB04XbUbV5AlDWdaOkyZwVuCRAo4jbGg-2yyY65n1Uf_stzDd7fJAk9fPsKYBay_Eb8SO4mp2baVmBATHlwGWHxGasrRattujcAzs7_5drEr63J7SEMkRcEw_GxUrHumo4B6o8Jd9MuLvwcqJs2zcNc"/>
+</div>
+</div>
+</div>
+<div class="w-full md:w-1/2">
+<h2 class="font-label-mono text-primary-container mb-8">/ ABOUT ME</h2>
+<div class="masked-text text-primary font-headline-md text-headline-md leading-snug">
+<p class="reveal-line">I AM A DIGITAL ARCHITECT</p>
+<p class="reveal-line">TRANSFORMING COMPLEX CODE</p>
+<p class="reveal-line">INTO IMMERSIVE EXPERIENCES.</p>
+<p class="reveal-line">BASED IN LONDON, WORKING</p>
+<p class="reveal-line">WORLDWIDE FOR BOLD BRANDS.</p>
+</div>
+<p class="mt-8 font-body-lg text-outline max-w-lg">
+                    Specializing in high-performance web applications and cinematic user interfaces. My approach combines brutalist structural integrity with the delicate touch of editorial design.
+                </p>
+</div>
+</section>
+<!-- Projects Horizontal Scroll -->
+<section class="overflow-hidden bg-surface-container-lowest" id="work">
+<div class="py-gutter px-margin-safe">
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary" id="projects-title">SELECTED WORK</h2>
+</div>
+<div class="horizontal-scroll" id="scroll-wrapper">
+<!-- Card 1 -->
+<div class="project-card group">
+<img class="project-img parallax-img" data-alt="A wide cinematic landscape of a futuristic neon-lit city at night. Glowing emerald green and vibrant pink light trails cut through the dark architectural silhouettes. The image has a sharp, high-definition digital aesthetic with heavy atmosphere and technical brutalist undertones." data-parallax="0.2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCM0EgWMfTvfbLJ-PMZ1f8-a17-y0HcmooB9qzAtP618ooru_k6wiTkNJYimEvJ4YWzWjSvOQreT2vjvBHROWfN1ne1UVeUzLKS9U7J5bz6QkgXx_TJTLtPal54z7xoBMnDSFhiNub_lrSrHXBGWd1x-hI8r0lexSfEtULtJDoTsBJ8ox1hhGYo4ud5wUL8bj7lWacRFcJlye2OvhrSzVvr4PRMqBv0ZYf8KE7wz_z6cTuc6LxDWYBH6P8oSZ7Nv9PCDEzxZAKToE4"/>
+<div class="absolute bottom-12 left-12">
+<span class="font-label-mono text-primary-container text-xs">01 / FINTECH</span>
+<h3 class="font-display-lg-mobile text-primary mt-2">CYBERBANK</h3>
+<p class="font-label-mono text-outline mt-4">UI/UX • FRONTEND • THREE.JS</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="project-card group">
+<img class="project-img parallax-img" data-alt="Macro photography of complex vintage motherboard circuits and microchips. The lighting is cold and clinical, with sharp highlights reflecting off metallic surfaces. Colors are dominated by deep greens and tech-black, emphasizing structural complexity and digital craftsmanship." data-parallax="-0.2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO9FPgAJ_-i4F6ofmre_yIT6TyhbNK_nfiyZZCZEbclQjDnLPxOqczIInaozo3mXtC61LhJVlhPpFks8DO7Jzq39ZNA0pFkMoqAUeFO4Vo_gBMD1c2-qCnFdOrVgqWZl_gVR6Xk9mW2-KgpRg9B8qi7vRI-1V9Sh9M2fHo4DsrJn3hK_-Rby0qBVg_0t6_-wtjLVFgTqCjqp6cMh3Vi_62fswBDLdRM-9SH9og-xWZyhifpIEmp79pdWPfP65YLO8qaYOShXUiZ-0"/>
+<div class="absolute bottom-12 left-12">
+<span class="font-label-mono text-primary-container text-xs">02 / E-COMMERCE</span>
+<h3 class="font-display-lg-mobile text-primary mt-2">NEO_STORE</h3>
+<p class="font-label-mono text-outline mt-4">SHOPIFY • GSAP • HEADLESS</p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="project-card group">
+<img class="project-img parallax-img" data-alt="Abstract visualization of a global data network. Brilliant lines of cyan and green light connect nodes across a dark spherical mesh that resembles the Earth from space. The atmosphere is cinematic and expansive, representing high-speed connectivity and cloud infrastructure." data-parallax="0.15" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUdhB8H57zrTXPfvQy02O0RLYtLMNqo02KebvsBqpPFOmUNOcLAxWY-31XKapLso-5pguu6B04EpNpj2nFGTMIasXFJWuBtAeMBGZ1DJkklhfs0l_07vgR-pEsWxt9byWKkPXyWi_O85XemF_X9QyUmycRfGfMcZfVXzkLe9AYEleVqAh452_MIwEzgnVx7w3CgM7eHpkBW1ZQgCTN9BnpVQOG_sZV8H41o7A5mIi_mZ3ZmLvCGFH9h2BjH0u8RGjoyFUseX58WX4"/>
+<div class="absolute bottom-12 left-12">
+<span class="font-label-mono text-primary-container text-xs">03 / SaaS</span>
+<h3 class="font-display-lg-mobile text-primary mt-2">CLOUD_CORE</h3>
+<p class="font-label-mono text-outline mt-4">REACT • NODE • DOCKER</p>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="project-card group">
+<img class="project-img parallax-img" data-alt="Dramatic architectural view looking up into the center of a brutalist concrete skyscraper. The geometric shadows create extreme contrast against a bright white sky. The image is monochrome with a heavy green tint, capturing the raw power and structural minimalism of modern engineering." data-parallax="-0.15" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBwYr-Xf68_04QvnF8hzPRSpx2_06r-l7FrFPji6n0vWAmU8AlmfwJ45cmmVGouKn-PXEY7so2euq1c7ZTc7KE_5K6Bt1GPtsMnIGExE4FFwvZFJzsAqp6m-_ID15KOeiUcg04hNDPTeEqcJZGhpQhifx7rkzTqHYrNZ6057cB8WzPV6VJTaScnagl2oJZy8dxOqC1_qSN6a2pcM5HYJw7i0fT9_YgRNbeG34_0Pg4vP_aNjsTfFavibMakkk4xQpIubOCUzu2rh4"/>
+<div class="absolute bottom-12 left-12">
+<span class="font-label-mono text-primary-container text-xs">04 / AGENCY</span>
+<h3 class="font-display-lg-mobile text-primary mt-2">STRUCTURE</h3>
+<p class="font-label-mono text-outline mt-4">WEB DESIGN • BRANDING</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Expertise Section -->
+<section class="py-section-gap px-margin-safe bg-background" id="expertise">
+<div class="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
+<div>
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary" id="skills-trigger">EXPERTISE</h2>
+<p class="font-label-mono text-outline max-w-md mt-4">Pushing the boundaries of what's possible in the browser through technical excellence.</p>
+</div>
+<div class="text-right">
+<span class="font-display-2xl text-[120px] leading-none opacity-10">02</span>
+</div>
+</div>
+<!-- Marquees -->
+<div class="marquee-container py-8 border-y border-outline-variant/20 mb-24">
+<div class="marquee-content font-display-lg text-display-lg-mobile text-outline/20">
+<span class="mx-12">REACT</span><span class="mx-12 text-primary-container">GSAP</span>
+<span class="mx-12">TYPESCRIPT</span><span class="mx-12">THREE.JS</span>
+<span class="mx-12 text-primary-container">TAILWIND</span><span class="mx-12">NODE</span>
+<!-- Duplicate for infinite effect -->
+<span class="mx-12">REACT</span><span class="mx-12 text-primary-container">GSAP</span>
+<span class="mx-12">TYPESCRIPT</span><span class="mx-12">THREE.JS</span>
+<span class="mx-12 text-primary-container">TAILWIND</span><span class="mx-12">NODE</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-gutter gap-y-12">
+<div class="skill-item">
+<div class="flex justify-between mb-4 font-label-mono-bold">
+<span>FRONTEND ARCHITECTURE</span>
+<span>98%</span>
+</div>
+<div class="h-[1px] w-full bg-outline-variant/30 relative">
+<div class="skill-progress absolute h-full bg-primary-container w-0" data-width="98%"></div>
+</div>
+</div>
+<div class="skill-item">
+<div class="flex justify-between mb-4 font-label-mono-bold">
+<span>CREATIVE INTERACTION</span>
+<span>95%</span>
+</div>
+<div class="h-[1px] w-full bg-outline-variant/30 relative">
+<div class="skill-progress absolute h-full bg-primary-container w-0" data-width="95%"></div>
+</div>
+</div>
+<div class="skill-item">
+<div class="flex justify-between mb-4 font-label-mono-bold">
+<span>BACKEND SYSTEMS</span>
+<span>88%</span>
+</div>
+<div class="h-[1px] w-full bg-outline-variant/30 relative">
+<div class="skill-progress absolute h-full bg-primary-container w-0" data-width="88%"></div>
+</div>
+</div>
+<div class="skill-item">
+<div class="flex justify-between mb-4 font-label-mono-bold">
+<span>MOTION DESIGN</span>
+<span>92%</span>
+</div>
+<div class="h-[1px] w-full bg-outline-variant/30 relative">
+<div class="skill-progress absolute h-full bg-primary-container w-0" data-width="92%"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Contact Section -->
+<section class="min-h-screen py-section-gap px-margin-safe flex flex-col justify-center bg-surface-container-lowest" id="contact">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-24">
+<div>
+<h2 class="font-display-2xl text-[80px] md:text-[140px] leading-none text-primary mb-12" id="contact-title">LET'S<br/>TALK</h2>
+<div class="flex flex-col gap-6">
+<p class="font-body-lg text-outline">Got a project in mind? Or just want to say hi? My inbox is always open for collaborations and creative inquiries.</p>
+<div class="flex gap-8 mt-4">
+<a class="font-label-mono-bold text-primary-container hover:underline magnetic-hover" href="#">GITHUB</a>
+<a class="font-label-mono-bold text-primary-container hover:underline magnetic-hover" href="#">LINKEDIN</a>
+<a class="font-label-mono-bold text-primary-container hover:underline magnetic-hover" href="#">X / TWITTER</a>
+</div>
+</div>
+</div>
+<form class="flex flex-col gap-12" onsubmit="event.preventDefault(); showToast();">
+<div class="line-clamp flex flex-col gap-2">
+<label class="font-label-mono-bold text-xs text-outline uppercase tracking-widest">Name</label>
+<input class="bg-transparent border-none p-0 focus:ring-0 text-primary font-headline-md text-2xl placeholder:text-outline-variant/30" placeholder="John Doe" required="" type="text"/>
+</div>
+<div class="line-clamp flex flex-col gap-2">
+<label class="font-label-mono-bold text-xs text-outline uppercase tracking-widest">Email</label>
+<input class="bg-transparent border-none p-0 focus:ring-0 text-primary font-headline-md text-2xl placeholder:text-outline-variant/30" placeholder="john@example.com" required="" type="email"/>
+</div>
+<div class="line-clamp flex flex-col gap-2">
+<label class="font-label-mono-bold text-xs text-outline uppercase tracking-widest">Message</label>
+<textarea class="bg-transparent border-none p-0 focus:ring-0 text-primary font-headline-md text-2xl placeholder:text-outline-variant/30 resize-none" placeholder="Tell me about your project..." required="" rows="3"></textarea>
+</div>
+<button class="liquid-btn bg-primary-container text-on-primary-container font-label-mono-bold py-6 text-xl tracking-widest uppercase" type="submit">
+<span class="relative z-10">SEND MESSAGE</span>
+</button>
+</form>
+</div>
+</section>
+</main>
+<footer class="w-full relative border-t border-outline-variant/10 bg-background flex flex-col md:flex-row justify-between items-center px-margin-safe py-section-gap-mobile md:py-gutter">
+<div class="mb-4 md:mb-0">
+<span class="font-label-mono-bold text-label-mono-bold text-primary" id="footer-typewriter"></span>
+</div>
+<div class="flex gap-8 items-center">
+<span class="font-body-sm text-body-sm text-outline">©2024 DESIGNED_BY_CODE</span>
+<div class="flex gap-4">
+<a class="font-label-mono-bold text-outline hover:text-primary-container transition-all duration-500 cursor-none" href="#">GITHUB</a>
+<a class="font-label-mono-bold text-outline hover:text-primary-container transition-all duration-500 cursor-none" href="#">LINKEDIN</a>
+</div>
+</div>
+</footer>
+<div class="toast font-label-mono-bold text-sm" id="toast">MESSAGE SENT SUCCESSFULLY.</div>
+<script>
+        // Init GSAP
+        gsap.registerPlugin(ScrollTrigger, TextPlugin);
+
+        // Lenis Smooth Scroll
+        const lenis = new Lenis();
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+        gsap.ticker.lagSmoothing(0);
+
+        // Preloader Logic
+        const counter = document.getElementById('load-counter');
+        const loadBar = document.getElementById('load-bar');
+        const preloader = document.getElementById('preloader');
+        const ascii = document.getElementById('ascii-drift');
+        
+        let count = 0;
+        const chars = "!<>-_\\/[]{}—=+*^?#________";
+        
+        const updateLoader = () => {
+            count += Math.floor(Math.random() * 5);
+            if(count > 100) count = 100;
+            counter.innerText = count;
+            loadBar.style.width = count + '%';
+            
+            // Drift ASCII
+            let str = "";
+            for(let i=0; i<500; i++) str += chars[Math.floor(Math.random() * chars.length)];
+            ascii.innerText = str;
+
+            if(count < 100) {
+                setTimeout(updateLoader, 50);
+            } else {
+                gsap.to(preloader, {
+                    y: '-100%',
+                    duration: 1.2,
+                    ease: 'expo.inOut',
+                    delay: 0.5,
+                    onComplete: initAnimations
+                });
+            }
+        };
+        updateLoader();
+
+        // Custom Cursor
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorCircle = document.querySelector('.cursor-circle');
+        
+        window.addEventListener('mousemove', (e) => {
+            gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0 });
+            gsap.to(cursorCircle, { x: e.clientX, y: e.clientY, duration: 0.15 });
+        });
+
+        document.querySelectorAll('a, button, input, textarea, .project-card').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                gsap.to(cursorCircle, { scale: 1.8, backgroundColor: 'rgba(0, 255, 135, 0.1)', duration: 0.3 });
+                cursorCircle.classList.remove('mix-blend-difference');
+            });
+            el.addEventListener('mouseleave', () => {
+                gsap.to(cursorCircle, { scale: 1, backgroundColor: 'transparent', duration: 0.3 });
+                cursorCircle.classList.add('mix-blend-difference');
+            });
+        });
+
+        // Three.js Hero Background
+        function initHeroThree() {
+            const container = document.getElementById('hero-canvas');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            container.appendChild(renderer.domElement);
+
+            const geometry = new THREE.BufferGeometry();
+            const vertices = [];
+            for (let i = 0; i < 1800; i++) {
+                vertices.push(THREE.MathUtils.randFloatSpread(2000), THREE.MathUtils.randFloatSpread(2000), THREE.MathUtils.randFloatSpread(2000));
+            }
+            geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+            const particles = new THREE.Points(geometry, new THREE.PointsMaterial({ color: 0x00FF87, size: 2 }));
+            scene.add(particles);
+
+            camera.position.z = 1000;
+
+            function animate() {
+                requestAnimationFrame(animate);
+                particles.rotation.x += 0.0005;
+                particles.rotation.y += 0.0005;
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+        initHeroThree();
+
+        // Main Animations
+        function initAnimations() {
+            // Hero Headline Reveal
+            gsap.from('#hero-headline', {
+                y: 100,
+                opacity: 0,
+                duration: 1.5,
+                ease: 'expo.out',
+                stagger: 0.2
+            });
+
+            // Scroll Progress - Modified Trigger
+            gsap.to('#scroll-progress', {
+                width: '100%',
+                ease: 'none',
+                scrollTrigger: { 
+                    trigger: 'body',
+                    start: 'top top',
+                    end: 'bottom bottom',
+                    scrub: 0 
+                }
+            });
+
+            // Horizontal Project Scroll
+            const wrapper = document.getElementById('scroll-wrapper');
+            gsap.to(wrapper, {
+                x: () => -(wrapper.scrollWidth - window.innerWidth),
+                ease: "none",
+                scrollTrigger: {
+                    trigger: "#work",
+                    start: "top top",
+                    end: () => "+=" + wrapper.scrollWidth,
+                    scrub: 1,
+                    pin: true,
+                    anticipatePin: 1,
+                    onUpdate: (self) => {
+                        // Card parallaxes
+                        document.querySelectorAll('.parallax-img').forEach(img => {
+                            const speed = parseFloat(img.dataset.parallax);
+                            gsap.to(img, { x: (self.progress * 1000) * speed, ease: 'none', overwrite: 'auto' });
+                        });
+                    }
+                }
+            });
+
+            // Section 01 / 02 slams
+            gsap.from('#projects-title', {
+                x: -200, opacity: 0,
+                scrollTrigger: { trigger: '#work', start: 'top 80%', scrub: 1 }
+            });
+
+            // About Reveal
+            const revealLines = document.querySelectorAll('.reveal-line');
+            revealLines.forEach((line, i) => {
+                gsap.from(line, {
+                    y: 40, opacity: 0, duration: 1, delay: i * 0.1,
+                    scrollTrigger: { trigger: '.masked-text', start: 'top 80%' }
+                });
+            });
+
+            // Blob Morphing
+            const blob = document.getElementById('morph-blob');
+            const paths = [
+                "M44.7,-76.4C58.1,-69.2,69.2,-58.1,77.3,-44.7C85.4,-31.3,90.5,-15.7,89.3,-0.7C88.1,14.3,80.6,28.6,71.5,41.2C62.4,53.8,51.8,64.7,39,72.4C26.2,80.1,13.1,84.6,-0.7,85.8C-14.5,87,-29,84.9,-42.2,78.2C-55.4,71.5,-67.3,60.2,-75.4,46.6C-83.5,33,-87.8,17.1,-87.4,1.4C-87,-14.3,-81.9,-29.8,-73.2,-43.3C-64.5,-56.8,-52.2,-68.3,-38.3,-75C-24.4,-81.7,-12.2,-83.6,1.4,-86.1C15.1,-88.6,30.2,-83.6,44.7,-76.4Z",
+                "M42.2,-72.1C55.3,-64.1,66.9,-52.7,74.1,-39.3C81.3,-25.9,84.1,-10.5,81.3,3.8C78.4,18.1,69.9,31.4,59.3,42.4C48.7,53.4,36,62,22.1,68.4C8.2,74.8,-6.8,79.1,-21.2,77.3C-35.6,75.4,-49.3,67.5,-60,56.1C-70.8,44.7,-78.6,29.9,-81.5,14.3C-84.4,-1.3,-82.4,-17.7,-75.3,-32.1C-68.1,-46.5,-55.8,-58.9,-42.1,-66.6C-28.5,-74.3,-13.4,-77.3,1,-79.1C15.4,-80.9,30.8,-81.5,42.2,-72.1Z"
+            ];
+            gsap.to(blob, {
+                attr: { d: paths[1] },
+                duration: 4,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            });
+
+            // Skills Progress
+            gsap.to('.skill-progress', {
+                width: (i, el) => el.dataset.width,
+                ease: 'elastic.out(1, 0.3)',
+                duration: 2.5,
+                scrollTrigger: { trigger: '#skills-trigger', start: 'top 70%' }
+            });
+
+            // Text Scramble Expertise
+            const skillTrigger = document.getElementById('skills-trigger');
+            const originalText = skillTrigger.innerText;
+            skillTrigger.addEventListener('mouseenter', () => {
+                gsap.to(skillTrigger, {
+                    duration: 0.5,
+                    text: { value: "01011101", padSpace: true },
+                    ease: "none"
+                });
+            });
+            skillTrigger.addEventListener('mouseleave', () => {
+                gsap.to(skillTrigger, {
+                    duration: 0.5,
+                    text: { value: originalText, padSpace: true },
+                    ease: "none"
+                });
+            });
+
+            // Footer Typing
+            gsap.to("#footer-typewriter", {
+                duration: 3,
+                text: "MADE WITH HEART AND CODE",
+                ease: "none",
+                repeat: -1,
+                repeatDelay: 2,
+                yoyo: true
+            });
+        }
+
+        // Magnetic Logic
+        document.querySelectorAll('.magnetic-hover').forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3 });
+            });
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, { x: 0, y: 0, duration: 0.3 });
+            });
+        });
+
+        // Toast
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+    </script>
+</body></html>

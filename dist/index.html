@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ALEX_DEV | Portfolio</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&amp;family=Space+Mono:wght@400;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@100..900&amp;family=Syne:wght@100..900&amp;display=swap" rel="stylesheet"/>
+
+<!-- External Libraries -->
+
+
+
+
+
+
+
+
+  <script type="module" crossorigin src="/assets/index-BgaUjXyp.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DRNV_d8S.css">
+</head>
+<body class="text-primary selection:bg-primary-container selection:text-on-primary-container tech-grid">
+<!-- Glitch flash overlay -->
+<div id="glitch-flash"></div>
+<!-- CRT scanlines & grain overlays -->
+<div class="crt-scanlines"></div>
+<div class="crt-grain"></div>
+<!-- Cinematic Spotlight Overlay -->
+<div id="spotlight-overlay"></div>
+<!-- Hidden SVG Displacement Filters for Project Cards -->
+<svg style="display: none;">
+  <filter id="liquid-distortion-1">
+    <feTurbulence type="fractalNoise" baseFrequency="0.04 0.02" numOctaves="2" result="noise" />
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" class="disp-map" />
+  </filter>
+  <filter id="liquid-distortion-2">
+    <feTurbulence type="fractalNoise" baseFrequency="0.04 0.02" numOctaves="2" result="noise" />
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" class="disp-map" />
+  </filter>
+  <filter id="liquid-distortion-3">
+    <feTurbulence type="fractalNoise" baseFrequency="0.04 0.02" numOctaves="2" result="noise" />
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" class="disp-map" />
+  </filter>
+  <filter id="liquid-distortion-4">
+    <feTurbulence type="fractalNoise" baseFrequency="0.04 0.02" numOctaves="2" result="noise" />
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" class="disp-map" />
+  </filter>
+</svg>
+<!-- Custom Cursor -->
+<div class="custom-cursor hidden md:block">
+<canvas id="cursor-trail" class="fixed inset-0 pointer-events-none z-[9998]"></canvas>
+<div class="cursor-dot fixed -translate-x-1/2 -translate-y-1/2"></div>
+<div class="cursor-circle fixed -translate-x-1/2 -translate-y-1/2 mix-blend-difference"></div>
+</div>
+<!-- Preloader -->
+<div id="preloader">
+<div id="preloader-left" class="w-1/2 h-full bg-[#071009] border-r border-outline-variant/10 relative"></div>
+<div id="preloader-right" class="w-1/2 h-full bg-[#071009] border-l border-outline-variant/10 relative"></div>
+<div id="preloader-content" class="absolute inset-0 flex flex-col justify-center items-center pointer-events-none z-10">
+<div class="absolute inset-0 opacity-10 font-label-mono text-primary text-[10px] p-4 leading-none overflow-hidden" id="ascii-drift"></div>
+<div class="flex flex-col items-center">
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary-container" id="load-counter">0</h1>
+<p class="font-label-mono text-outline uppercase tracking-[0.5em] mt-4" id="load-status">Initializing Systems</p>
+</div>
+<div id="preloader-terminal" class="absolute bottom-12 left-margin-safe font-label-mono text-[9px] md:text-[11px] text-primary-container opacity-50 max-w-xs md:max-w-md h-24 overflow-hidden flex flex-col justify-end gap-1 text-left leading-tight"></div>
+</div>
+<div class="progress-bar z-20" id="load-bar"></div>
+</div>
+<!-- Global Progress -->
+<div class="fixed top-0 left-0 w-full h-[2px] bg-white/5 z-[60]">
+<div class="h-full bg-primary-container w-0" id="scroll-progress"></div>
+</div>
+<!-- Navigation -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-safe py-gutter border-b border-outline-variant/20 bg-transparent mix-blend-difference">
+<a class="font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-primary tracking-tighter magnetic-hover" href="#">ALEX_DEV</a>
+<nav class="hidden md:flex gap-12">
+<a class="magnetic-hover text-primary font-label-mono hover:text-primary-container transition-colors duration-300 scramble-text" href="#work">WORK</a>
+<a class="magnetic-hover text-primary font-label-mono hover:text-primary-container transition-colors duration-300 scramble-text" href="#expertise">EXPERTISE</a>
+<a class="magnetic-hover text-primary font-label-mono hover:text-primary-container transition-colors duration-300 scramble-text" href="#contact">CONTACT</a>
+</nav>
+<button class="liquid-btn border border-primary px-8 py-3 font-label-mono-bold text-label-mono-bold magnetic-hover scramble-text">RESUME</button>
+</header>
+<!-- Hero Section -->
+<section class="relative h-screen flex flex-col justify-center px-margin-safe overflow-hidden" style="padding-top:68px;">
+<div class="three-canvas" id="hero-canvas"></div>
+<div class="max-w-6xl">
+<p class="font-label-mono text-primary-container mb-4 reveal-stagger">EST. 2018 / FULL-STACK ARCHITECT</p>
+<h1 class="font-display-2xl text-[64px] md:text-display-2xl leading-[0.9] text-primary mb-12" id="hero-headline">CRAFTING<br/>DIGITAL<br/>WORLDS</h1>
+<div class="reveal-stagger">
+<button class="liquid-btn bg-transparent border border-primary-container text-primary-container px-10 py-5 font-label-mono-bold text-lg group">
+<span class="relative z-10 transition-colors duration-300">VIEW MY WORK</span>
+</button>
+</div>
+</div>
+<div class="absolute bottom-12 right-margin-safe flex flex-col items-end">
+<span class="font-label-mono text-outline text-xs rotate-90 origin-right translate-y-12 mb-16">SCROLL TO EXPLORE</span>
+<div class="w-[1px] h-24 bg-gradient-to-b from-primary-container to-transparent"></div>
+</div>
+</section>
+<!-- About Section -->
+<section class="min-h-screen flex flex-col md:flex-row relative overflow-hidden" id="about">
+<div class="volumetric-fog"></div>
+<div class="corner-crosshair crosshair-tl">+</div>
+<div class="corner-crosshair crosshair-tr">+</div>
+<div class="corner-crosshair crosshair-bl">+</div>
+<div class="corner-crosshair crosshair-br">+</div>
+
+<!-- Left Sidebar Column -->
+<div class="border-r border-outline-variant/15 flex flex-col items-center justify-between py-16 w-full md:w-36 flex-shrink-0 relative z-10 bg-background/50 backdrop-blur-sm md:backdrop-blur-none">
+  <span id="about-bg-num" class="font-display-2xl text-[80px] md:text-[100px] font-bold leading-none text-primary-container select-none">01</span>
+  <span class="font-label-mono text-[9px] md:text-[11px] text-outline tracking-[0.4em] uppercase [writing-mode:vertical-lr] rotate-180 py-8 select-none">EST. 2018 // FULL-STACK ARCHITECT</span>
+</div>
+
+<!-- Main Area -->
+<div class="flex-1 flex flex-col justify-center relative p-8 md:p-16 min-h-[80vh]">
+  <!-- Large floating section title in background -->
+  <div class="absolute right-6 top-10 font-display-2xl text-[72px] md:text-[130px] font-extrabold leading-none text-transparent select-none pointer-events-none z-10" style="-webkit-text-stroke: 1px rgba(241, 255, 239, 0.08);">
+    ABOUT
+  </div>
+  
+  <!-- Technical Grid Overlay (Widescreen HUD blueprint lines) -->
+  <div class="absolute inset-0 z-0 pointer-events-none">
+    <svg class="w-full h-full stroke-primary-container/10" xmlns="http://www.w3.org/2000/svg">
+      <!-- Grid lines -->
+      <line x1="20%" y1="0" x2="20%" y2="100%" stroke-width="0.5" />
+      <line x1="50%" y1="0" x2="50%" y2="100%" stroke-width="0.5" />
+      <line x1="80%" y1="0" x2="80%" y2="100%" stroke-width="0.5" />
+      
+      <line x1="0" y1="30%" x2="100%" y2="30%" stroke-width="0.5" />
+      <line x1="0" y1="70%" x2="100%" y2="70%" stroke-width="0.5" />
+      
+      <!-- Intersection dots -->
+      <circle cx="20%" cy="30%" r="2" fill="#00FF87" />
+      <circle cx="20%" cy="70%" r="2" fill="#00FF87" />
+      <circle cx="50%" cy="30%" r="2" fill="#00FF87" />
+      <circle cx="50%" cy="70%" r="2" fill="#00FF87" />
+      <circle cx="80%" cy="30%" r="2" fill="#00FF87" />
+      <circle cx="80%" cy="70%" r="2" fill="#00FF87" />
+    </svg>
+  </div>
+
+  <!-- Background portrait image container -->
+  <div class="absolute right-0 top-0 bottom-0 w-full md:w-[65%] h-full z-0 overflow-hidden" id="about-image-container">
+    <img class="w-full h-full object-cover object-center opacity-85 filter grayscale contrast-[1.2]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkv7eiqHNZjafv7uS7uaagvnMeCkpho6Mtm0a21GW9gj0D1nEKTay8jM0phVeEpwDuGadgbnCiZnDiO3yhfhe_pq4WOD--M1FTmObSHvww2CTbOFUXoUS2dB04XbUbV5AlDWdaOkyZwVuCRAo4jbGg-2yyY65n1Uf_stzDd7fJAk9fPsKYBay_Eb8SO4mp2baVmBATHlwGWHxGasrRattujcAzs7_5drEr63J7SEMkRcEw_GxUrHumo4B6o8Jd9MuLvwcqJs2zcNc"/>
+    <!-- Gradient overlay to fade left side into background #0c160e -->
+    <div class="absolute inset-0 bg-gradient-to-r from-[#0c160e] via-[#0c160e]/85 to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-[#0c160e] via-transparent to-[#0c160e]"></div>
+    <!-- Green screen tint overlay matching image vibe -->
+    <div class="absolute inset-0 bg-[#00FF87]/15 mix-blend-color"></div>
+    
+    <!-- Coordinate tag floating on image -->
+    <div class="absolute bottom-10 right-10 flex flex-col gap-1 font-label-mono text-[9px] md:text-[11px] text-primary-container tracking-wider uppercase z-20">
+      <span>LOC: 51.5074° N, 0.1278° W // LONDON_CORE</span>
+      <span class="opacity-55">SYS_STATUS: ACTIVE // RENDER: COMPLETED</span>
+    </div>
+  </div>
+
+  <!-- Text Content Layout Overlaying background -->
+  <div class="relative z-10 max-w-2xl text-left" id="about-text">
+    <h2 class="font-label-mono text-primary-container text-xs tracking-widest mb-6">// ABOUT ENGINE OPERATIONAL</h2>
+    <div class="masked-text text-primary font-headline-md text-[36px] md:text-[48px] leading-tight mb-8">
+      <p class="reveal-line">I AM A DIGITAL ARCHITECT</p>
+      <p class="reveal-line">TRANSFORMING COMPLEX CODE</p>
+      <p class="reveal-line">INTO IMMERSIVE EXPERIENCES.</p>
+      <p class="reveal-line">BASED IN LONDON, WORKING</p>
+      <p class="reveal-line">WORLDWIDE FOR BOLD BRANDS.</p>
+    </div>
+    <p class="font-body-lg text-outline max-w-lg leading-relaxed">
+      Specializing in high-performance web applications and cinematic user interfaces. My approach combines brutalist structural integrity with the delicate touch of editorial design.
+    </p>
+  </div>
+</div>
+</section>
+<!-- SVG Scroll Line -->
+<div class="relative w-full h-0 pointer-events-none z-0">
+  <svg class="absolute left-1/2 -translate-x-1/2 pointer-events-none hidden md:block" width="120" height="900" viewBox="0 0 120 900" fill="none" style="top: -200px;">
+    <path id="scroll-path" d="M60 0 V 250 C 60 400, 10 500, 10 650 C 10 750, 110 800, 110 900 V 1000" stroke="#00FF87" stroke-width="2" stroke-dasharray="8 8"/>
+  </svg>
+</div>
+<!-- Projects Horizontal Scroll -->
+<section class="overflow-hidden bg-surface-container-lowest relative" id="work">
+<div class="corner-crosshair crosshair-tl">+</div>
+<div class="corner-crosshair crosshair-tr">+</div>
+<div class="corner-crosshair crosshair-bl">+</div>
+<div class="corner-crosshair crosshair-br">+</div>
+<div class="py-gutter px-margin-safe">
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary" id="projects-title">SELECTED WORK</h2>
+</div>
+<div class="horizontal-scroll" id="scroll-wrapper">
+<!-- Card 1 -->
+<div class="project-card group">
+<div class="absolute top-6 left-6 w-4 h-4 border-t border-l border-primary-container/40 z-20 pointer-events-none transition-all duration-300 group-hover:scale-110 group-hover:border-primary-container"></div>
+<div class="absolute top-6 right-6 w-4 h-4 border-t border-r border-primary-container/40 z-20 pointer-events-none transition-all duration-300 group-hover:scale-110 group-hover:border-primary-container"></div>
+<div class="absolute bottom-6 left-6 w-4 h-4 border-b border-l border-primary-container/40 z-20 pointer-events-none transition-all duration-300 group-hover:scale-110 group-hover:border-primary-container"></div>
+<div class="absolute bottom-6 right-6 w-4 h-4 border-b border-r border-primary-container/40 z-20 pointer-events-none transition-all duration-300 group-hover:scale-110 group-hover:border-primary-container"></div>
+<div class="absolute top-6 left-12 font-label-mono text-[9px] text-primary-container/60 tracking-widest uppercase z-20 pointer-events-none group-hover:text-primary-container">
+  RENDER_ENGINE: THREE.JS // GEOM_COMPLEXITY: HIGH
+</div>
+<img class="project-img parallax-img project-img-1" data-alt="A wide cinematic landscape of a futuristic neon-lit city at night. Glowing emerald green and vibrant pink light trails cut through the dark architectural silhouettes. The image has a sharp, high-definition digital aesthetic with heavy atmosphere and technical brutalist undertones." data-parallax="0.2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCM0EgWMfTvfbLJ-PMZ1f8-a17-y0HcmooB9qzAtP618ooru_k6wiTkNJYimEvJ4YWzWjSvOQreT2vjvBHROWfN1ne1UVeUzLKS9U7J5bz6QkgXx_TJTLtPal54z7xoBMnDSFhiNub_lrSrHXBGWd1x-hI8r0lexSfEtULtJDoTsBJ8ox1hhGYo4ud5wUL8bj7lWacRFcJlye2OvhrSzVvr4PRMqBv0ZYf8KE7wz_z6cTuc6LxDWYBH6P8oSZ7Nv9PCDEzxZAKToE4"/>
+<div class="absolute bottom-12 left-12">
+<span class="font-label-mono text-primary-container text-xs">01 / FINTECH</span>
+<h3 class="font-display-lg-mobile text-primary mt-2">CYBERBANK</h3>
+<p class="font-label-mono text-outline mt-4">UI/UX • FRONTEND • THREE.JS</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="project-card group">
+<div class="absolute top-6 left-6 w-4 h-4 border-t border-l border-primary-container/40 z-20 pointer-events-none transition-all duration-300 group-hover:scale-110 group-hover:border-primary-container"></div>
+<div class="absolute top-6 right-6 w-4 h-4 border-t border-r border-primary-container/40 z-20 pointer-events-none transition-all duration-300 group-hover:scale-110 group-hover:border-primary-container"></div>
+<div class="absolute bottom-6 left-6 w-4 h-4 border-b border-l border-primary-container/40 z-20 pointer-events-none transition-all duration-300 group-hover:scale-110 group-hover:border-primary-container"></div>
+<div class="absolute bottom-6 right-6 w-4 h-4 border-b border-r border-primary-container/40 z-20 pointer-events-none transition-all duration-300 group-hover:scale-110 group-hover:border-primary-container"></div>
+<div class="absolute top-6 left-12 font-label-mono text-[9px] text-primary-container/60 tracking-widest uppercase z-20 pointer-events-none group-hover:text-primary-container">
+  SHOPIFY_API: ACTIVE // GSAP_MODULE: LOADED
+</div>
+<img class="project-img parallax-img project-img-2" data-alt="Macro photography of complex vintage motherboard circuits and microchips. The lighting is cold and clinical, with sharp highlights reflecting off metallic surfaces. Colors are dominated by deep greens and tech-black, emphasizing structural complexity and digital craftsmanship." data-parallax="-0.2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO9FPgAJ_-i4F6ofmre_yIT6TyhbNK_nfiyZZCZEbclQjDnLPxOqczIInaozo3mXtC61LhJVlhPpFks8DO7Jzq39ZNA0pFkMoqAUeFO4Vo_gBMD1c2-qCnFdOrVgqWZl_gVR6Xk9mW2-KgpRg9B8qi7vRI-1V9Sh9M2fHo4DsrJn3hK_-Rby0qBVg_0t6_-wtjLVFgTqCjqp6cMh3Vi_62fswBDLdRM-9SH9og-xWZyhifpIEmp79pdWPfP65YLO8qaYOShXUiZ-0"/>
+<div class="absolute bottom-12 left-12">
+<span class="font-label-mono text-primary-container text-xs">02 / E-COMMERCE</span>
+<h3 class="font-display-lg-mobile text-primary mt-2">NEO_STORE</h3>
+<p class="font-label-mono text-outline mt-4">SHOPIFY • GSAP • HEADLESS</p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="project-card group">
+<div class="absolute top-6 left-6 w-4 h-4 border-t border-l border-primary-container/40 z-20 pointer-events-none transition-all duration-300 group-hover:scale-110 group-hover:border-primary-container"></div>
+<div class="absolute top-6 right-6 w-4 h-4 border-t border-r border-primary-container/40 z-20 pointer-events-none transition-all duration-300 group-hover:scale-110 group-hover:border-primary-container"></div>
+<div class="absolute bottom-6 left-6 w-4 h-4 border-b border-l border-primary-container/40 z-20 pointer-events-none transition-all duration-300 group-hover:scale-110 group-hover:border-primary-container"></div>
+<div class="absolute bottom-6 right-6 w-4 h-4 border-b border-r border-primary-container/40 z-20 pointer-events-none transition-all duration-300 group-hover:scale-110 group-hover:border-primary-container"></div>
+<div class="absolute top-6 left-12 font-label-mono text-[9px] text-primary-container/60 tracking-widest uppercase z-20 pointer-events-none group-hover:text-primary-container">
+  DEPLOY_SYS: DOCKER // UPLINK: SECURE
+</div>
+<img class="project-img parallax-img project-img-3" data-alt="Abstract visualization of a global data network. Brilliant lines of cyan and green light connect nodes across a dark spherical mesh that resembles the Earth from space. The atmosphere is cinematic and expansive, representing high-speed connectivity and cloud infrastructure." data-parallax="0.15" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUdhB8H57zrTXPfvQy02O0RLYtLMNqo02KebvsBqpPFOmUNOcLAxWY-31XKapLso-5pguu6B04EpNpj2nFGTMIasXFJWuBtAeMBGZ1DJkklhfs0l_07vgR-pEsWxt9byWKkPXyWi_O85XemF_X9QyUmycRfGfMcZfVXzkLe9AYEleVqAh452_MIwEzgnVx7w3CgM7eHpkBW1ZQgCTN9BnpVQOG_sZV8H41o7A5mIi_mZ3ZmLvCGFH9h2BjH0u8RGjoyFUseX58WX4"/>
+<div class="absolute bottom-12 left-12">
+<span class="font-label-mono text-primary-container text-xs">03 / SaaS</span>
+<h3 class="font-display-lg-mobile text-primary mt-2">CLOUD_CORE</h3>
+<p class="font-label-mono text-outline mt-4">REACT • NODE • DOCKER</p>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="project-card group">
+<div class="absolute top-6 left-6 w-4 h-4 border-t border-l border-primary-container/40 z-20 pointer-events-none transition-all duration-300 group-hover:scale-110 group-hover:border-primary-container"></div>
+<div class="absolute top-6 right-6 w-4 h-4 border-t border-r border-primary-container/40 z-20 pointer-events-none transition-all duration-300 group-hover:scale-110 group-hover:border-primary-container"></div>
+<div class="absolute bottom-6 left-6 w-4 h-4 border-b border-l border-primary-container/40 z-20 pointer-events-none transition-all duration-300 group-hover:scale-110 group-hover:border-primary-container"></div>
+<div class="absolute bottom-6 right-6 w-4 h-4 border-b border-r border-primary-container/40 z-20 pointer-events-none transition-all duration-300 group-hover:scale-110 group-hover:border-primary-container"></div>
+<div class="absolute top-6 left-12 font-label-mono text-[9px] text-primary-container/60 tracking-widest uppercase z-20 pointer-events-none group-hover:text-primary-container">
+  STRUCTURE_SYS: DEPLOYED // BRAND: LOADED
+</div>
+<img class="project-img parallax-img project-img-4" data-alt="Dramatic architectural view looking up into the center of a brutalist concrete skyscraper. The geometric shadows create extreme contrast against a bright white sky. The image is monochrome with a heavy green tint, capturing the raw power and structural minimalism of modern engineering." data-parallax="-0.15" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBwYr-Xf68_04QvnF8hzPRSpx2_06r-l7FrFPji6n0vWAmU8AlmfwJ45cmmVGouKn-PXEY7so2euq1c7ZTc7KE_5K6Bt1GPtsMnIGExE4FFwvZFJzsAqp6m-_ID15KOeiUcg04hNDPTeEqcJZGhpQhifx7rkzTqHYrNZ6057cB8WzPV6VJTaScnagl2oJZy8dxOqC1_qSN6a2pcM5HYJw7i0fT9_YgRNbeG34_0Pg4vP_aNjsTfFavibMakkk4xQpIubOCUzu2rh4"/>
+<div class="absolute bottom-12 left-12">
+<span class="font-label-mono text-primary-container text-xs">04 / AGENCY</span>
+<h3 class="font-display-lg-mobile text-primary mt-2">STRUCTURE</h3>
+<p class="font-label-mono text-outline mt-4">WEB DESIGN • BRANDING</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Expertise Section -->
+<section class="py-section-gap px-margin-safe bg-background relative" id="expertise">
+<div class="volumetric-fog"></div>
+<div class="corner-crosshair crosshair-tl">+</div>
+<div class="corner-crosshair crosshair-tr">+</div>
+<div class="corner-crosshair crosshair-bl">+</div>
+<div class="corner-crosshair crosshair-br">+</div>
+<div class="flex flex-col md:flex-row justify-between items-end mb-24 gap-8" id="expertise-header">
+<div>
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary" id="skills-trigger">EXPERTISE</h2>
+<p class="font-label-mono text-outline max-w-md mt-4">Pushing the boundaries of what's possible in the browser through technical excellence.</p>
+</div>
+<div class="text-right">
+<span class="font-display-2xl text-[120px] leading-none opacity-10">02</span>
+</div>
+</div>
+<!-- Marquees -->
+<div class="marquee-container py-8 border-y border-outline-variant/20 mb-24">
+<div class="marquee-content font-display-lg text-display-lg-mobile text-outline/20">
+<span class="mx-12">REACT</span><span class="mx-12 text-primary-container">GSAP</span>
+<span class="mx-12">TYPESCRIPT</span><span class="mx-12">THREE.JS</span>
+<span class="mx-12 text-primary-container">TAILWIND</span><span class="mx-12">NODE</span>
+<!-- Duplicate for infinite effect -->
+<span class="mx-12">REACT</span><span class="mx-12 text-primary-container">GSAP</span>
+<span class="mx-12">TYPESCRIPT</span><span class="mx-12">THREE.JS</span>
+<span class="mx-12 text-primary-container">TAILWIND</span><span class="mx-12">NODE</span>
+</div>
+</div>
+<div id="stack-container" class="relative flex flex-col gap-12 mt-12">
+<!-- Card 1 -->
+<div class="stack-card bg-[#141e16] border border-outline-variant/30 p-8 md:p-12 flex flex-col md:flex-row justify-between rounded-xl sticky top-24 min-h-[300px] shadow-2xl overflow-hidden">
+<!-- Technical Grid Overlay inside card -->
+<div class="absolute inset-0 tech-grid opacity-10 pointer-events-none z-0"></div>
+<div class="flex flex-col justify-between max-w-lg relative z-10">
+<div>
+<span class="font-label-mono text-primary-container text-xs tracking-widest">01 / ARCHITECTURE</span>
+<h3 class="font-display-lg text-display-lg-mobile md:text-headline-md text-primary mt-4">FRONTEND ARCHITECTURE</h3>
+<p class="font-body-lg text-outline mt-6">Building performant, accessible, and cinematic web interfaces with clean semantic code, robust component systems, and state-of-the-art tooling.</p>
+</div>
+<div class="mt-8 font-label-mono text-[10px] text-primary-container flex flex-wrap gap-4">
+<span>// REACT</span> <span>// NEXT.JS</span> <span>// TYPESCRIPT</span> <span>// TAILWIND</span>
+</div>
+</div>
+<!-- Card 1 SVG System Graph (Pulsing node tree) -->
+<div class="hidden lg:block w-36 h-36 opacity-35 select-none pointer-events-none self-center relative z-10">
+  <svg class="w-full h-full" viewBox="0 0 100 100">
+    <circle cx="50" cy="15" r="3" fill="#00FF87" class="animate-ping" />
+    <circle cx="50" cy="15" r="2" fill="#00FF87" />
+    <line x1="50" y1="15" x2="30" y2="45" stroke="#00FF87" stroke-width="0.5" stroke-dasharray="1 1" />
+    <line x1="50" y1="15" x2="50" y2="45" stroke="#00FF87" stroke-width="0.5" />
+    <line x1="50" y1="15" x2="70" y2="45" stroke="#00FF87" stroke-width="0.5" stroke-dasharray="1 1" />
+    <circle cx="30" cy="45" r="2.5" fill="#00FF87" />
+    <circle cx="50" cy="45" r="2.5" fill="#00FF87" class="animate-pulse" />
+    <circle cx="70" cy="45" r="2.5" fill="#00FF87" />
+    <line x1="30" y1="45" x2="20" y2="75" stroke="#00FF87" stroke-width="0.5" />
+    <line x1="30" y1="45" x2="40" y2="75" stroke="#00FF87" stroke-width="0.5" />
+    <line x1="70" y1="45" x2="60" y2="75" stroke="#00FF87" stroke-width="0.5" />
+    <line x1="70" y1="45" x2="80" y2="75" stroke="#00FF87" stroke-width="0.5" />
+    <circle cx="20" cy="75" r="1.5" fill="#00FF87" />
+    <circle cx="40" cy="75" r="1.5" fill="#00FF87" />
+    <circle cx="60" cy="75" r="1.5" fill="#00FF87" />
+    <circle cx="80" cy="75" r="1.5" fill="#00FF87" class="animate-ping" />
+  </svg>
+</div>
+<div class="text-left md:text-right flex flex-col justify-between items-start md:items-end mt-8 md:mt-0 relative z-10">
+<span class="font-display-2xl text-[80px] md:text-[100px] leading-none opacity-10 font-bold text-primary-container">98%</span>
+<div class="w-48 bg-outline-variant/30 h-[2px] relative mt-4 md:mt-0">
+<div class="absolute h-full bg-primary-container" style="width: 98%;"></div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="stack-card bg-[#1c1822] border border-outline-variant/30 p-8 md:p-12 flex flex-col md:flex-row justify-between rounded-xl sticky top-28 min-h-[300px] shadow-2xl overflow-hidden">
+<!-- Technical Grid Overlay inside card -->
+<div class="absolute inset-0 tech-grid opacity-[0.06] pointer-events-none z-0"></div>
+<div class="flex flex-col justify-between max-w-lg relative z-10">
+<div>
+<span class="font-label-mono text-[#ffb2ba] text-xs tracking-widest">02 / SYSTEMS</span>
+<h3 class="font-display-lg text-display-lg-mobile md:text-headline-md text-primary mt-4">BACKEND SYSTEMS</h3>
+<p class="font-body-lg text-outline mt-6">Designing robust database models, RESTful/GraphQL APIs, high-throughput backend services, and scalable cloud deployments.</p>
+</div>
+<div class="mt-8 font-label-mono text-[10px] text-[#ffb2ba] flex flex-wrap gap-4">
+<span>// NODE</span> <span>// DOCKER</span> <span>// POSTGRESQL</span> <span>// AWS</span>
+</div>
+</div>
+<!-- Card 2 SVG System Graph (Database node net) -->
+<div class="hidden lg:block w-36 h-36 opacity-35 select-none pointer-events-none self-center relative z-10">
+  <svg class="w-full h-full animate-[spin_20s_linear_infinite]" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="35" stroke="#ffb2ba" stroke-width="0.5" stroke-dasharray="3 3" fill="none" />
+    <circle cx="50" cy="50" r="20" stroke="#ffb2ba" stroke-width="0.5" stroke-dasharray="2 4" fill="none" />
+    <circle cx="50" cy="15" r="3" fill="#ffb2ba" />
+    <circle cx="15" cy="50" r="3" fill="#ffb2ba" class="animate-pulse" />
+    <circle cx="50" cy="85" r="3" fill="#ffb2ba" />
+    <circle cx="85" cy="50" r="3" fill="#ffb2ba" />
+    <circle cx="50" cy="50" r="4.5" fill="#ffb2ba" class="animate-ping" />
+    <circle cx="50" cy="50" r="3" fill="#ffb2ba" />
+    <line x1="50" y1="15" x2="50" y2="85" stroke="#ffb2ba" stroke-width="0.5" />
+    <line x1="15" y1="50" x2="85" y2="50" stroke="#ffb2ba" stroke-width="0.5" />
+  </svg>
+</div>
+<div class="text-left md:text-right flex flex-col justify-between items-start md:items-end mt-8 md:mt-0 relative z-10">
+<span class="font-display-2xl text-[80px] md:text-[100px] leading-none opacity-10 font-bold text-[#ffb2ba]">88%</span>
+<div class="w-48 bg-outline-variant/30 h-[2px] relative mt-4 md:mt-0">
+<div class="absolute h-full bg-[#ffb2ba]" style="width: 88%;"></div>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="stack-card bg-[#222c24] border border-outline-variant/30 p-8 md:p-12 flex flex-col md:flex-row justify-between rounded-xl sticky top-32 min-h-[300px] shadow-2xl overflow-hidden">
+<!-- Technical Grid Overlay inside card -->
+<div class="absolute inset-0 tech-grid opacity-10 pointer-events-none z-0"></div>
+<div class="flex flex-col justify-between max-w-lg relative z-10">
+<div>
+<span class="font-label-mono text-primary-container text-xs tracking-widest">03 / MOTION</span>
+<h3 class="font-display-lg text-display-lg-mobile md:text-headline-md text-primary mt-4">MOTION DESIGN</h3>
+<p class="font-body-lg text-outline mt-6">Creating smooth, high-frame-rate animations, vector shapes transitions, custom cursor interactions, and WebGL physics elements.</p>
+</div>
+<div class="mt-8 font-label-mono text-[10px] text-primary-container flex flex-wrap gap-4">
+<span>// GSAP</span> <span>// THREE.JS</span> <span>// SVG FILTERS</span> <span>// WEBGL</span>
+</div>
+</div>
+<!-- Card 3 SVG System Graph (Waving Oscilloscope) -->
+<div class="hidden lg:block w-40 h-32 opacity-40 select-none pointer-events-none self-center relative z-10">
+  <svg class="w-full h-full" viewBox="0 0 120 80">
+    <line x1="0" y1="40" x2="120" y2="40" stroke="#00FF87" stroke-width="0.3" opacity="0.5" />
+    <line x1="60" y1="0" x2="60" y2="80" stroke="#00FF87" stroke-width="0.3" opacity="0.5" />
+    <rect x="5" y="5" width="110" height="70" stroke="#00FF87" stroke-width="0.4" stroke-dasharray="2 2" fill="none" opacity="0.3" />
+    <path d="M 5 40 Q 20 10, 35 40 T 65 40 T 95 40 T 115 40" stroke="#00FF87" stroke-width="1.2" fill="none">
+      <animate attributeName="d" 
+               values="M 5 40 Q 20 10, 35 40 T 65 40 T 95 40 T 115 40;
+                       M 5 40 Q 20 70, 35 40 T 65 40 T 95 40 T 115 40;
+                       M 5 40 Q 20 10, 35 40 T 65 40 T 95 40 T 115 40" 
+               dur="3s" 
+               repeatCount="indefinite"/>
+    </path>
+    <path d="M 5 40 Q 20 60, 35 40 T 65 40 T 95 40 T 115 40" stroke="#00FF87" stroke-width="0.6" fill="none" opacity="0.5">
+      <animate attributeName="d" 
+               values="M 5 40 Q 20 60, 35 40 T 65 40 T 95 40 T 115 40;
+                       M 5 40 Q 20 20, 35 40 T 65 40 T 95 40 T 115 40;
+                       M 5 40 Q 20 60, 35 40 T 65 40 T 95 40 T 115 40" 
+               dur="2s" 
+               repeatCount="indefinite"/>
+    </path>
+  </svg>
+</div>
+<div class="text-left md:text-right flex flex-col justify-between items-start md:items-end mt-8 md:mt-0 relative z-10">
+<span class="font-display-2xl text-[80px] md:text-[100px] leading-none opacity-10 font-bold text-primary-container">95%</span>
+<div class="w-48 bg-outline-variant/30 h-[2px] relative mt-4 md:mt-0">
+<div class="absolute h-full bg-primary-container" style="width: 95%;"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Contact Section -->
+<section class="min-h-screen py-section-gap px-margin-safe flex flex-col justify-center bg-surface-container-lowest relative" id="contact">
+<div class="corner-crosshair crosshair-tl">+</div>
+<div class="corner-crosshair crosshair-tr">+</div>
+<div class="corner-crosshair crosshair-bl">+</div>
+<div class="corner-crosshair crosshair-br">+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-24">
+<div id="contact-left">
+<h2 class="font-display-2xl text-[80px] md:text-[140px] leading-none text-primary mb-12" id="contact-title">LET'S<br/>TALK</h2>
+<div class="flex flex-col gap-6">
+<p class="font-body-lg text-outline">Got a project in mind? Or just want to say hi? My inbox is always open for collaborations and creative inquiries.</p>
+<div class="flex gap-8 mt-4">
+<a class="font-label-mono-bold text-primary-container hover:underline magnetic-hover scramble-text" href="#">GITHUB</a>
+<a class="font-label-mono-bold text-primary-container hover:underline magnetic-hover scramble-text" href="#">LINKEDIN</a>
+<a class="font-label-mono-bold text-primary-container hover:underline magnetic-hover scramble-text" href="#">X / TWITTER</a>
+</div>
+</div>
+<!-- Live Keystroke Console Terminal -->
+<div class="mt-12 p-6 bg-[#071009] border border-outline-variant/20 rounded-lg max-w-md relative overflow-hidden">
+  <div class="absolute inset-0 tech-grid opacity-[0.03] pointer-events-none z-0"></div>
+  <div class="flex items-center justify-between border-b border-outline-variant/20 pb-2 mb-4 relative z-10">
+    <span class="font-label-mono text-[9px] text-primary-container uppercase tracking-wider">// INPUT_DIAGNOSTICS_UPLINK</span>
+    <div class="flex gap-1.5">
+      <span class="w-1.5 h-1.5 rounded-full bg-[#00FF87] animate-pulse"></span>
+      <span class="w-1.5 h-1.5 rounded-full bg-[#00FF87]/40"></span>
+    </div>
+  </div>
+  <div id="contact-terminal" class="font-label-mono text-[10px] text-[#00FF87]/80 h-28 overflow-hidden flex flex-col gap-1 select-none leading-normal relative z-10 scrollbar-none">
+    <div>[ READY ] Sys console listening...</div>
+    <div>[ IDLE ] Awaiting form focus.</div>
+  </div>
+</div>
+</div>
+<form class="flex flex-col gap-12" onsubmit="event.preventDefault(); showToast();">
+<div class="line-clamp flex flex-col gap-2">
+<label class="font-label-mono-bold text-xs text-outline uppercase tracking-widest">Name</label>
+<input id="contact-name" class="bg-transparent border-none p-0 focus:ring-0 text-primary font-headline-md text-2xl placeholder:text-outline-variant/30" placeholder="John Doe" required="" type="text"/>
+</div>
+<div class="line-clamp flex flex-col gap-2">
+<label class="font-label-mono-bold text-xs text-outline uppercase tracking-widest">Email</label>
+<input id="contact-email" class="bg-transparent border-none p-0 focus:ring-0 text-primary font-headline-md text-2xl placeholder:text-outline-variant/30" placeholder="john@example.com" required="" type="email"/>
+</div>
+<div class="line-clamp flex flex-col gap-2">
+<label class="font-label-mono-bold text-xs text-outline uppercase tracking-widest">Message</label>
+<textarea id="contact-message" class="bg-transparent border-none p-0 focus:ring-0 text-primary font-headline-md text-2xl placeholder:text-outline-variant/30 resize-none" placeholder="Tell me about your project..." required="" rows="3"></textarea>
+</div>
+<button class="liquid-btn bg-primary-container text-on-primary-container font-label-mono-bold py-6 text-xl tracking-widest uppercase" type="submit">
+<span class="relative z-10">SEND MESSAGE</span>
+</button>
+</form>
+</div>
+</section>
+<footer class="w-full relative border-t border-outline-variant/10 bg-background flex flex-col md:flex-row justify-between items-center px-margin-safe py-section-gap-mobile md:py-gutter">
+<div class="mb-4 md:mb-0">
+<span class="font-label-mono-bold text-label-mono-bold text-primary" id="footer-typewriter"></span>
+</div>
+<div class="flex gap-8 items-center">
+<span class="font-body-sm text-body-sm text-outline">©2024 DESIGNED_BY_CODE</span>
+<div class="flex gap-4">
+<a class="font-label-mono-bold text-outline hover:text-primary-container transition-all duration-500 cursor-none" href="#">GITHUB</a>
+<a class="font-label-mono-bold text-outline hover:text-primary-container transition-all duration-500 cursor-none" href="#">LINKEDIN</a>
+</div>
+</div>
+</footer>
+<div class="toast font-label-mono-bold text-sm" id="toast">MESSAGE SENT SUCCESSFULLY.</div>
+</body></html>
