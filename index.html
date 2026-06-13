@@ -74,7 +74,7 @@
 <div class="h-full bg-primary-container w-0" id="scroll-progress"></div>
 </div>
 <!-- Navigation -->
-<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-safe py-gutter border-b border-outline-variant/20 bg-transparent mix-blend-difference">
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-safe py-gutter border-b border-outline-variant/20 bg-[#0c160e]/95 md:bg-transparent backdrop-blur-md md:backdrop-blur-none mix-blend-normal md:mix-blend-difference">
 <a class="font-display-lg-mobile text-2xl md:font-display-lg md:text-display-lg text-primary tracking-tighter magnetic-hover" href="#">FRED_DEV</a>
 <nav class="hidden md:flex gap-12">
 <a class="magnetic-hover text-primary font-label-mono hover:text-primary-container transition-colors duration-300 scramble-text" href="#work">WORK</a>
@@ -112,6 +112,15 @@
 <div class="absolute bottom-12 right-margin-safe flex flex-col items-end">
 <span class="font-label-mono text-outline text-xs rotate-90 origin-right translate-y-12 mb-16">SCROLL TO EXPLORE</span>
 <div class="w-[1px] h-24 bg-gradient-to-b from-primary-container to-transparent"></div>
+</div>
+
+<!-- Dynamic Coordinate HUD Widget -->
+<div class="absolute bottom-10 right-10 flex flex-col gap-2 font-label-mono tracking-wider uppercase z-20 bg-[#071009]/80 backdrop-blur-md p-4 border border-primary/30 rounded-lg shadow-[0_0_20px_rgba(0,255,135,0.15)] transform transition-all duration-500 hover:scale-105 hover:border-primary">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse" id="geo-indicator"></div>
+<span id="geo-location-display" class="text-xs md:text-sm text-primary transition-colors duration-300">AWAITING_SIGNAL // SCANNING...</span>
+</div>
+<span class="text-primary-container/50 text-[10px] md:text-xs" id="geo-status">SYS_STATUS: INITIATING UPLINK</span>
 </div>
 </section>
 <!-- About Section -->
@@ -163,28 +172,15 @@
     <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#0c160e] via-[#0c160e]/90 to-transparent"></div>
     <!-- Green screen tint overlay matching image vibe -->
     <div class="absolute inset-0 bg-[#00FF87]/15 mix-blend-color"></div>
-    
-    <!-- Dynamic Coordinate HUD Widget -->
-    <div class="absolute bottom-10 right-10 flex flex-col gap-2 font-label-mono tracking-wider uppercase z-20 bg-[#071009]/80 backdrop-blur-md p-4 border border-primary/30 rounded-lg shadow-[0_0_20px_rgba(0,255,135,0.15)] transform transition-all duration-500 hover:scale-105 hover:border-primary">
-      <div class="flex items-center gap-3">
-        <div class="w-2 h-2 rounded-full bg-primary animate-pulse" id="geo-indicator"></div>
-        <span id="geo-location-display" class="text-xs md:text-sm text-primary transition-colors duration-300">AWAITING_SIGNAL // SCANNING...</span>
-      </div>
-      <span class="text-primary-container/50 text-[10px] md:text-xs" id="geo-status">SYS_STATUS: INITIATING UPLINK</span>
-    </div>
   </div>
 
   <!-- Text Content Layout Overlaying background -->
   <div class="relative z-10 max-w-2xl text-left" id="about-text">
     <h2 class="font-label-mono text-primary-container text-xs tracking-widest mb-6">// ABOUT ENGINE OPERATIONAL</h2>
-    <div class="masked-text text-primary font-headline-md text-2xl md:text-[48px] leading-tight mb-8">
-      <p class="reveal-line">TURNING COMPLEX ALGORITHMS</p>
-      <p class="reveal-line">AND MODERN FRAMEWORKS INTO</p>
-      <p class="reveal-line">IMMERSIVE EXPERIENCES.</p>
-      <p class="reveal-line">BASED IN INDIA, ENGINEERING</p>
-      <p class="reveal-line">BOLD SOLUTIONS FOR THE FUTURE.</p>
+    <div class="masked-text text-primary font-headline-md text-[24px] md:text-[48px] leading-snug md:leading-tight mb-8">
+      <p class="reveal-line">TURNING COMPLEX ALGORITHMS AND MODERN FRAMEWORKS INTO IMMERSIVE EXPERIENCES. BASED IN INDIA, ENGINEERING BOLD SOLUTIONS FOR THE FUTURE.</p>
     </div>
-    <p class="font-body-lg text-outline max-w-lg leading-relaxed">
+    <p class="font-body-lg text-outline max-w-lg leading-relaxed mt-4">
       Specializing in high-performance web applications and cinematic user interfaces. My approach combines brutalist structural integrity with the delicate touch of editorial design.
     </p>
   </div>
