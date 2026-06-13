@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 
-        body { background-color: #0c160e; cursor: none; overflow-x: hidden; }
+        html { touch-action: pan-y; -webkit-tap-highlight-color: transparent; }
+        body { background-color: #0c160e; cursor: none; overflow-x: hidden; overscroll-behavior-x: none; }
+        @media (pointer: coarse) { body { cursor: auto; } }
         .custom-cursor { pointer-events: none; position: fixed; top: 0; left: 0; z-index: 9999; }
         .cursor-dot { width: 10px; height: 10px; background-color: #00FF87; border-radius: 50%; }
         .cursor-circle { width: 40px; height: 40px; border: 1px solid #00FF87; border-radius: 50%; transition: transform 0.1s ease-out; }
@@ -79,7 +81,7 @@
                 linear-gradient(rgba(0, 255, 135, 0.025) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 255, 135, 0.025) 1px, transparent 1px);
             background-size: 60px 60px;
-            background-attachment: fixed;
+            /* NOTE: background-attachment:fixed removed — it forces full repaint on every scroll frame on Android Chrome and iOS, causing severe scroll jank */
         }
 
         #glitch-flash {
@@ -106,15 +108,16 @@
         .crosshair-bl { bottom: 8px; left: 8px; }
         .crosshair-br { bottom: 8px; right: 8px; }
 
-        /* ── Cinematic Spotlight Overlay ───────────────────────────── */
+        /* ── Cinematic Spotlight Overlay (desktop only) ───────────────────── */
         #spotlight-overlay {
             position: fixed;
             inset: 0;
             z-index: 1;
             pointer-events: none;
-            will-change: background;
+            /* will-change removed to avoid GPU compositing layer overhead on mobile */
             background: radial-gradient(circle 350px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 255, 135, 0.08), transparent 85%);
             mix-blend-mode: screen;
+            display: none; /* hidden on mobile; shown on desktop via JS */
         }
         
         /* ── Volumetric Ambient Fog ────────────────────────────────── */

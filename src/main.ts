@@ -208,11 +208,13 @@ import './style.css';
             });
         });
 
-        // ── Canvas Cursor Trail ──────────────────────────────────────
+        // ── Canvas Cursor Trail (desktop only) ─────────────────────────
         function initCursorTrail() {
+            if (isTouchDevice) return; // Skip on all touch devices — canvas rAF loop causes scroll jank
             const canvas = document.getElementById('cursor-trail');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
+            canvas.style.display = 'block';
             
             let points = [];
             const maxPoints = 25;
@@ -273,78 +275,84 @@ import './style.css';
         }
         initCursorTrail();
 
-        // ── Custom Cursor snapping & movement ──────────────────────────
-        const cursorDot = document.querySelector('.cursor-dot');
-        const cursorCircle = document.querySelector('.cursor-circle');
-        let snapTarget = null;
-        
-        window.addEventListener('mousemove', (e) => {
-            gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0 });
-            
-            // Update CSS variables for mouse-following cinematic spotlight
-            document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
-            document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
-            
-            if (snapTarget) {
-                const rect = snapTarget.getBoundingClientRect();
-                gsap.to(cursorCircle, {
-                    x: rect.left + rect.width / 2,
-                    y: rect.top + rect.height / 2,
-                    duration: 0.18,
-                    ease: 'power2.out'
-                });
-            } else {
-                gsap.to(cursorCircle, { x: e.clientX, y: e.clientY, duration: 0.15 });
-            }
-        });
+        // ── Custom Cursor, Spotlight, Magnetic Hover (desktop only) ────
+        if (!isTouchDevice) {
+            // Show spotlight overlay on desktop only
+            const spotlightEl = document.getElementById('spotlight-overlay');
+            if (spotlightEl) spotlightEl.style.display = 'block';
 
-        // Hover scale for standard links / interactive blocks
-        document.querySelectorAll('a, button, input, textarea, .project-card').forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                if (!el.classList.contains('magnetic-hover')) {
-                    gsap.to(cursorCircle, { scale: 1.8, backgroundColor: 'rgba(0, 255, 135, 0.1)', duration: 0.3 });
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorCircle = document.querySelector('.cursor-circle');
+            let snapTarget = null;
+            
+            window.addEventListener('mousemove', (e) => {
+                gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0 });
+                
+                // Update CSS variables for mouse-following cinematic spotlight
+                document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+                document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+                
+                if (snapTarget) {
+                    const rect = snapTarget.getBoundingClientRect();
+                    gsap.to(cursorCircle, {
+                        x: rect.left + rect.width / 2,
+                        y: rect.top + rect.height / 2,
+                        duration: 0.18,
+                        ease: 'power2.out'
+                    });
+                } else {
+                    gsap.to(cursorCircle, { x: e.clientX, y: e.clientY, duration: 0.15 });
+                }
+            });
+
+            // Hover scale for standard links / interactive blocks
+            document.querySelectorAll('a, button, input, textarea, .project-card').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    if (!el.classList.contains('magnetic-hover')) {
+                        gsap.to(cursorCircle, { scale: 1.8, backgroundColor: 'rgba(0, 255, 135, 0.1)', duration: 0.3 });
+                        cursorCircle.classList.remove('mix-blend-difference');
+                    }
+                });
+                el.addEventListener('mouseleave', () => {
+                    if (!el.classList.contains('magnetic-hover')) {
+                        gsap.to(cursorCircle, { scale: 1, backgroundColor: 'transparent', duration: 0.3 });
+                        cursorCircle.classList.add('mix-blend-difference');
+                    }
+                });
+            });
+
+            // Snap ring border for magnetic-hover items (nav links & button)
+            document.querySelectorAll('.magnetic-hover').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    snapTarget = el;
                     cursorCircle.classList.remove('mix-blend-difference');
-                }
-            });
-            el.addEventListener('mouseleave', () => {
-                if (!el.classList.contains('magnetic-hover')) {
-                    gsap.to(cursorCircle, { scale: 1, backgroundColor: 'transparent', duration: 0.3 });
+                    gsap.to(cursorCircle, {
+                        scale: 1,
+                        width: el.offsetWidth + 16,
+                        height: el.offsetHeight + 16,
+                        borderRadius: '4px',
+                        backgroundColor: 'rgba(0, 255, 135, 0.06)',
+                        borderColor: '#00FF87',
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+                });
+                el.addEventListener('mouseleave', () => {
+                    snapTarget = null;
                     cursorCircle.classList.add('mix-blend-difference');
-                }
-            });
-        });
-
-        // Snap ring border for magnetic-hover items (nav links & button)
-        document.querySelectorAll('.magnetic-hover').forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                snapTarget = el;
-                cursorCircle.classList.remove('mix-blend-difference');
-                gsap.to(cursorCircle, {
-                    scale: 1,
-                    width: el.offsetWidth + 16,
-                    height: el.offsetHeight + 16,
-                    borderRadius: '4px', // matching brutalist button corner radius
-                    backgroundColor: 'rgba(0, 255, 135, 0.06)',
-                    borderColor: '#00FF87',
-                    duration: 0.3,
-                    ease: 'power2.out'
+                    gsap.to(cursorCircle, {
+                        scale: 1,
+                        width: 40,
+                        height: 40,
+                        borderRadius: '50%',
+                        backgroundColor: 'transparent',
+                        borderColor: '#00FF87',
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
                 });
             });
-            el.addEventListener('mouseleave', () => {
-                snapTarget = null;
-                cursorCircle.classList.add('mix-blend-difference');
-                gsap.to(cursorCircle, {
-                    scale: 1,
-                    width: 40,
-                    height: 40,
-                    borderRadius: '50%',
-                    backgroundColor: 'transparent',
-                    borderColor: '#00FF87',
-                    duration: 0.3,
-                    ease: 'power2.out'
-                });
-            });
-        });
+        }
 
         // Three.js Hero Background - Interactive 3D Wireframe Scene (Grid Floor, Mountain Edges, Grid Ceiling, Floating Shapes)
         function initHeroThree() {
