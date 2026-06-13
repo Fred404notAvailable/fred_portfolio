@@ -608,30 +608,32 @@ import './style.css';
                 ceilMesh.rotation.y = -mouse.x * 0.08;
                 ceilMesh.rotation.x = Math.PI / 2 - mouse.y * 0.06;
 
-                // Raycast to find local intersection coordinate on the grid mesh
-                mouseVec.x = targetMouse.x;
-                mouseVec.y = targetMouse.y;
-                raycaster.setFromCamera(mouseVec, camera);
-                
-                // Intersection check on floor grid
-                const intersects = raycaster.intersectObject(gridMesh);
-                if (intersects.length > 0) {
-                    localMousePoint = intersects[0].point;
-                } else {
-                    localMousePoint = null;
-                }
-
-                // Intersection check on floating shapes (Spin fast & glow on hover!)
-                const intersectsShapes = raycaster.intersectObjects([shape1, shape2, shape3], true);
+                // Raycasting only applies to desktop (mouse interactions)
                 let hoveredShape = null;
-                if (intersectsShapes.length > 0) {
-                    let obj = intersectsShapes[0].object;
-                    // Walk up the tree to find the parent Group that has userData.isLogo
-                    while (obj && !obj.userData.isLogo && obj.parent && obj.parent !== scene) {
-                        obj = obj.parent;
+                if (!isTouchDevice) {
+                    mouseVec.x = targetMouse.x;
+                    mouseVec.y = targetMouse.y;
+                    raycaster.setFromCamera(mouseVec, camera);
+                    
+                    // Intersection check on floor grid
+                    const intersects = raycaster.intersectObject(gridMesh);
+                    if (intersects.length > 0) {
+                        localMousePoint = intersects[0].point;
+                    } else {
+                        localMousePoint = null;
                     }
-                    if (obj && obj.userData && obj.userData.isLogo) {
-                        hoveredShape = obj;
+
+                    // Intersection check on floating shapes (Spin fast & glow on hover!)
+                    const intersectsShapes = raycaster.intersectObjects([shape1, shape2, shape3], true);
+                    if (intersectsShapes.length > 0) {
+                        let obj = intersectsShapes[0].object;
+                        // Walk up the tree to find the parent Group that has userData.isLogo
+                        while (obj && !obj.userData.isLogo && obj.parent && obj.parent !== scene) {
+                            obj = obj.parent;
+                        }
+                        if (obj && obj.userData && obj.userData.isLogo) {
+                            hoveredShape = obj;
+                        }
                     }
                 }
 
@@ -645,50 +647,67 @@ import './style.css';
 
                 // Update Floor Grid Vertices (Waves + Mountain ridges + Cursor ripple)
                 const posAttr = geometry.attributes.position;
-                for (let i = 0; i < count; i++) {
-                    const orig = initialCoords[i];
-                    
-                    // Wave layer 1: broad slow rolling swell
-                    let z = Math.sin(orig.x * 0.003 + time) * 35 + Math.cos(orig.y * 0.003 + time) * 35;
-                    // Wave layer 2: faster micro ripples
-                    z += Math.sin(orig.x * 0.01 - time * 1.5) * 12;
-                    z += Math.cos(orig.y * 0.012 + time) * 8;
-
-                    // Mountain ridges along the edges (x = left/right boundary)
-                    const distFromCenter = Math.abs(orig.x);
-                    if (distFromCenter > 450) {
-                        const ridgeFactor = (distFromCenter - 450) / 1150; // normalized edge distance
-                        // Generate digital mountains rising up
-                        z += Math.pow(ridgeFactor, 1.5) * 280 * (Math.sin(orig.y * 0.008) * 0.4 + 0.6) * (Math.cos(orig.x * 0.005) * 0.5 + 0.5);
-                        z += Math.sin(orig.y * 0.02 + time * 1.5) * 15 * ridgeFactor;
-                    }
-
-                    // Wave layer 3: mouse proximity wave distortion
-                    if (localMousePoint) {
-                        const localPoint = gridMesh.worldToLocal(localMousePoint.clone());
-                        const dx = orig.x - localPoint.x;
-                        const dy = orig.y - localPoint.y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-
-                        if (dist < 450) {
-                            const normalizedDist = dist / 450;
-                            const rippleForce = (1 - normalizedDist) * 75;
-                            z += Math.sin(dist * 0.02 - time * 4) * rippleForce;
+                if (isTouchDevice) {
+                    // Ultra-lightweight calculation for mobile
+                    for (let i = 0; i < count; i++) {
+                        const orig = initialCoords[i];
+                        let z = Math.sin(orig.x * 0.003 + time) * 35;
+                        const distFromCenter = Math.abs(orig.x);
+                        if (distFromCenter > 450) {
+                            const ridgeFactor = (distFromCenter - 450) / 1150;
+                            z += Math.pow(ridgeFactor, 1.5) * 280;
                         }
+                        posAttr.setZ(i, z);
                     }
+                } else {
+                    // Full cinematic calculation for desktop
+                    for (let i = 0; i < count; i++) {
+                        const orig = initialCoords[i];
+                        
+                        // Wave layer 1: broad slow rolling swell
+                        let z = Math.sin(orig.x * 0.003 + time) * 35 + Math.cos(orig.y * 0.003 + time) * 35;
+                        // Wave layer 2: faster micro ripples
+                        z += Math.sin(orig.x * 0.01 - time * 1.5) * 12;
+                        z += Math.cos(orig.y * 0.012 + time) * 8;
 
-                    posAttr.setZ(i, z);
+                        // Mountain ridges along the edges (x = left/right boundary)
+                        const distFromCenter = Math.abs(orig.x);
+                        if (distFromCenter > 450) {
+                            const ridgeFactor = (distFromCenter - 450) / 1150; // normalized edge distance
+                            // Generate digital mountains rising up
+                            z += Math.pow(ridgeFactor, 1.5) * 280 * (Math.sin(orig.y * 0.008) * 0.4 + 0.6) * (Math.cos(orig.x * 0.005) * 0.5 + 0.5);
+                            z += Math.sin(orig.y * 0.02 + time * 1.5) * 15 * ridgeFactor;
+                        }
+
+                        // Wave layer 3: mouse proximity wave distortion
+                        if (localMousePoint) {
+                            const localPoint = gridMesh.worldToLocal(localMousePoint.clone());
+                            const dx = orig.x - localPoint.x;
+                            const dy = orig.y - localPoint.y;
+                            const dist = Math.sqrt(dx * dx + dy * dy);
+
+                            if (dist < 450) {
+                                const normalizedDist = dist / 450;
+                                const rippleForce = (1 - normalizedDist) * 75;
+                                z += Math.sin(dist * 0.02 - time * 4) * rippleForce;
+                            }
+                        }
+
+                        posAttr.setZ(i, z);
+                    }
                 }
                 posAttr.needsUpdate = true;
 
                 // Update Ceiling Grid Vertices (Waves)
-                const posAttrCeilUpdate = geometryCeil.attributes.position;
-                for (let i = 0; i < countCeil; i++) {
-                    const orig = initialCoordsCeil[i];
-                    let z = Math.sin(orig.x * 0.002 - time * 0.8) * 20 + Math.cos(orig.y * 0.002 - time * 0.8) * 20;
-                    posAttrCeilUpdate.setZ(i, z);
+                if (!isTouchDevice) {
+                    const posAttrCeilUpdate = geometryCeil.attributes.position;
+                    for (let i = 0; i < countCeil; i++) {
+                        const orig = initialCoordsCeil[i];
+                        let z = Math.sin(orig.x * 0.002 - time * 0.8) * 20 + Math.cos(orig.y * 0.002 - time * 0.8) * 20;
+                        posAttrCeilUpdate.setZ(i, z);
+                    }
+                    posAttrCeilUpdate.needsUpdate = true;
                 }
-                posAttrCeilUpdate.needsUpdate = true;
 
                 // Update Floating Shapes (Float + Spin + Raycast Hover logic)
                 const targetScaleHover = new THREE.Vector3(1.35, 1.35, 1.35);
