@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 
-        body { background-color: #0c160e; overflow-x: hidden; cursor: none; }
+        html, body { overflow-x: hidden; width: 100%; position: relative; }
+        body { background-color: #0c160e; cursor: none; }
         .custom-cursor { pointer-events: none; position: fixed; top: 0; left: 0; z-index: 9999; }
         .cursor-dot { width: 10px; height: 10px; background-color: #00FF87; border-radius: 50%; }
         .cursor-circle { width: 40px; height: 40px; border: 1px solid #00FF87; border-radius: 50%; transition: transform 0.1s ease-out; }
