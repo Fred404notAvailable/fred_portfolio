@@ -354,7 +354,7 @@ import './style.css';
             scene.fog = new THREE.FogExp2(0x0c160e, 0.00075);
             
             const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 3000);
-            camera.position.set(0, 260, 800);
+            camera.position.set(0, isTouchDevice ? 320 : 260, isTouchDevice ? 1100 : 800);
             camera.lookAt(0, 0, 0);
 
             const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
@@ -365,8 +365,8 @@ import './style.css';
             // 1. Denser Plane Geometry representing the floor terrain grid
             const gridWidth = 3200;
             const gridHeight = 3200;
-            const widthSegs = isTouchDevice ? 30 : 100;
-            const heightSegs = isTouchDevice ? 30 : 100;
+            const widthSegs = isTouchDevice ? 60 : 100;
+            const heightSegs = isTouchDevice ? 60 : 100;
             const geometry = new THREE.PlaneGeometry(gridWidth, gridHeight, widthSegs, heightSegs);
             
             const posAttr = geometry.attributes.position;
@@ -411,8 +411,8 @@ import './style.css';
             // 2. Ceiling Grid Plane (Mirroring the floor corridor)
             const ceilWidth = 3200;
             const ceilHeight = 3200;
-            const ceilSegsX = isTouchDevice ? 20 : 64;
-            const ceilSegsY = isTouchDevice ? 20 : 64;
+            const ceilSegsX = isTouchDevice ? 40 : 64;
+            const ceilSegsY = isTouchDevice ? 40 : 64;
             const geometryCeil = new THREE.PlaneGeometry(ceilWidth, ceilHeight, ceilSegsX, ceilSegsY);
             
             const posAttrCeil = geometryCeil.attributes.position;
@@ -481,9 +481,9 @@ import './style.css';
             shape2.userData = { isLogo: true, lineMat: lineMat2, glassMat: glassMat2 };
             shape3.userData = { isLogo: true, lineMat: lineMat3, glassMat: glassMat3 };
 
-            shape1.position.set(-350, 120, 100);
-            shape2.position.set(0, 180, -200);
-            shape3.position.set(350, 140, 50);
+            shape1.position.set(isTouchDevice ? -120 : -350, 120, 100);
+            shape2.position.set(0, isTouchDevice ? 240 : 180, -200);
+            shape3.position.set(isTouchDevice ? 120 : 350, 140, 50);
 
             scene.add(shape1);
             scene.add(shape2);
@@ -555,7 +555,7 @@ import './style.css';
             });
 
             gsap.to(shape1.position, {
-                x: -650,
+                x: isTouchDevice ? -200 : -650,
                 y: -100,
                 scrollTrigger: {
                     trigger: 'body',
@@ -566,7 +566,7 @@ import './style.css';
             });
 
             gsap.to(shape2.position, {
-                y: -250,
+                y: isTouchDevice ? -150 : -250,
                 z: -450,
                 scrollTrigger: {
                     trigger: 'body',
@@ -577,7 +577,7 @@ import './style.css';
             });
 
             gsap.to(shape3.position, {
-                x: 650,
+                x: isTouchDevice ? 200 : 650,
                 y: -100,
                 scrollTrigger: {
                     trigger: 'body',
