@@ -528,9 +528,9 @@ import './style.css';
                 });
             }
 
-            loadSVGIntoGroup('https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/brands/js.svg', shape1, lineMat1, glassMat1, 0.4);
-            loadSVGIntoGroup('https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/brands/html5.svg', shape2, lineMat2, glassMat2, 0.45);
-            loadSVGIntoGroup('https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/brands/github.svg', shape3, lineMat3, glassMat3, 0.4);
+            loadSVGIntoGroup('https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/brands/js.svg', shape1, lineMat1, glassMat1, 0.25);
+            loadSVGIntoGroup('https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/brands/html5.svg', shape2, lineMat2, glassMat2, 0.28);
+            loadSVGIntoGroup('https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/brands/github.svg', shape3, lineMat3, glassMat3, 0.25);
 
             // Mouse tracking
             let mouse = { x: 0, y: 0 };
