@@ -81,8 +81,22 @@
 <a class="magnetic-hover text-primary font-label-mono hover:text-primary-container transition-colors duration-300 scramble-text" href="#expertise">EXPERTISE</a>
 <a class="magnetic-hover text-primary font-label-mono hover:text-primary-container transition-colors duration-300 scramble-text" href="#contact">CONTACT</a>
 </nav>
-<a href="/Frederick_Resume.pdf" target="_blank" class="liquid-btn border border-primary px-8 py-3 font-label-mono-bold text-label-mono-bold magnetic-hover scramble-text flex items-center justify-center">RESUME</a>
+<button id="mobile-menu-btn" class="md:hidden flex flex-col justify-center items-center w-10 h-10 z-[100] relative">
+  <span class="w-8 h-0.5 bg-primary transition-all duration-300 mb-2"></span>
+  <span class="w-8 h-0.5 bg-primary transition-all duration-300"></span>
+</button>
+<a href="/Frederick_Resume.pdf" target="_blank" class="hidden md:flex liquid-btn border border-primary px-8 py-3 font-label-mono-bold text-label-mono-bold magnetic-hover scramble-text items-center justify-center">RESUME</a>
 </header>
+
+<!-- Mobile Full Screen Menu Overlay -->
+<div id="mobile-menu" class="fixed inset-0 bg-[#071009]/95 backdrop-blur-lg z-[90] flex flex-col items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+  <nav class="flex flex-col items-center gap-12">
+    <a class="mobile-nav-link text-primary font-display-lg text-4xl hover:text-primary-container transition-colors duration-300" href="#work">WORK</a>
+    <a class="mobile-nav-link text-primary font-display-lg text-4xl hover:text-primary-container transition-colors duration-300" href="#expertise">EXPERTISE</a>
+    <a class="mobile-nav-link text-primary font-display-lg text-4xl hover:text-primary-container transition-colors duration-300" href="#contact">CONTACT</a>
+    <a class="mobile-nav-link text-primary font-label-mono text-xl mt-8 border-b border-primary pb-2 hover:text-primary-container hover:border-primary-container transition-all" href="/Frederick_Resume.pdf" target="_blank">RESUME</a>
+  </nav>
+</div>
 <!-- Hero Section -->
 <section class="relative h-screen flex flex-col justify-center px-margin-safe overflow-hidden" style="padding-top:68px;">
 <div class="three-canvas" id="hero-canvas"></div>
@@ -109,7 +123,7 @@
 <div class="corner-crosshair crosshair-br">+</div>
 
 <!-- Left Sidebar Column -->
-<div class="border-r border-outline-variant/15 flex flex-col items-center justify-between py-16 w-full md:w-36 flex-shrink-0 relative z-10 bg-background/50 backdrop-blur-sm md:backdrop-blur-none">
+<div class="border-b md:border-b-0 border-r-0 md:border-r border-outline-variant/15 flex flex-col items-center justify-between py-8 md:py-16 w-full md:w-36 flex-shrink-0 relative z-10 bg-background/50 backdrop-blur-sm md:backdrop-blur-none">
   <span id="about-bg-num" class="font-display-2xl text-[80px] md:text-[100px] font-bold leading-none text-primary-container select-none">01</span>
   <span class="font-label-mono text-[9px] md:text-[11px] text-outline tracking-[0.4em] uppercase [writing-mode:vertical-lr] rotate-180 py-8 select-none">FULL-STACK ARCHITECT</span>
 </div>
@@ -143,7 +157,7 @@
   </div>
 
   <!-- Background portrait image container -->
-  <div class="absolute right-0 top-0 bottom-0 w-full md:w-[65%] h-full z-0 overflow-hidden" id="about-image-container">
+  <div class="absolute inset-0 md:left-auto md:right-0 w-full md:w-[65%] h-full z-0 overflow-hidden" id="about-image-container">
     <img class="w-full h-full object-cover object-center opacity-95 filter grayscale transform scale-[1.3]" src="/fred_portrait.jpeg"/>
     <!-- Gradient overlay to fade left side into background #0c160e -->
     <div class="absolute inset-0 bg-gradient-to-r from-[#0c160e] via-[#0c160e]/85 to-transparent"></div>
@@ -192,7 +206,7 @@
 <div class="py-gutter px-margin-safe">
 <h2 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary" id="projects-title">SELECTED WORK</h2>
 </div>
-<div class="flex flex-col items-center gap-40 py-32 px-4 md:px-8 w-full" id="projects-wrapper">
+<div class="flex flex-col items-center gap-24 md:gap-40 py-16 md:py-32 px-4 md:px-8 w-full" id="projects-wrapper">
 <!-- Card 1 -->
 <div class="project-row w-full max-w-[1400px] flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
 <div class="w-full lg:w-[55%]">
@@ -282,7 +296,7 @@
 <p class="font-label-mono text-outline max-w-md mt-4">Pushing the boundaries of what's possible in the browser through technical excellence.</p>
 </div>
 <div class="text-right">
-<span class="font-display-2xl text-[120px] leading-none opacity-10">02</span>
+<span class="font-display-2xl text-[80px] md:text-[120px] leading-none opacity-10">02</span>
 </div>
 </div>
 <!-- Marquees -->
@@ -429,7 +443,7 @@
 <div class="corner-crosshair crosshair-tr">+</div>
 <div class="corner-crosshair crosshair-bl">+</div>
 <div class="corner-crosshair crosshair-br">+</div>
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-24">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
 <div id="contact-left">
 <h2 class="font-display-2xl text-[80px] md:text-[140px] leading-none text-primary mb-12" id="contact-title">LET'S<br/>TALK</h2>
 <div class="flex flex-col gap-6">
@@ -455,7 +469,7 @@
   </div>
 </div>
 </div>
-<form id="contact-form" class="flex flex-col gap-12">
+<form id="contact-form" class="flex flex-col gap-8 md:gap-12">
 <input type="hidden" name="_captcha" value="false">
 <div class="line-clamp flex flex-col gap-2">
 <label class="font-label-mono-bold text-xs text-outline uppercase tracking-widest">Name</label>

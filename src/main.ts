@@ -1290,4 +1290,54 @@ import './style.css';
                 });
             });
         }
-    
+
+        // Mobile Menu Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        let menuOpen = false;
+
+        if (mobileMenuBtn && mobileMenu) {
+            const lines = mobileMenuBtn.querySelectorAll('span');
+            
+            const toggleMenu = () => {
+                menuOpen = !menuOpen;
+                
+                // Animate hamburger icon to X
+                if (menuOpen) {
+                    gsap.to(lines[0], { y: 5, rotation: 45, duration: 0.3, ease: 'power2.inOut' });
+                    gsap.to(lines[1], { y: -5, rotation: -45, duration: 0.3, ease: 'power2.inOut' });
+                    
+                    // Show menu
+                    mobileMenu.classList.remove('pointer-events-none');
+                    mobileMenu.classList.remove('opacity-0');
+                    
+                    // Stagger links
+                    gsap.fromTo(mobileNavLinks, 
+                        { y: 30, opacity: 0 },
+                        { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power3.out', delay: 0.1 }
+                    );
+                    
+                    // Stop lenis scroll
+                    lenis.stop();
+                } else {
+                    gsap.to(lines[0], { y: 0, rotation: 0, duration: 0.3, ease: 'power2.inOut' });
+                    gsap.to(lines[1], { y: 0, rotation: 0, duration: 0.3, ease: 'power2.inOut' });
+                    
+                    // Hide menu
+                    mobileMenu.classList.add('opacity-0');
+                    mobileMenu.classList.add('pointer-events-none');
+                    
+                    // Start lenis scroll
+                    lenis.start();
+                }
+            };
+
+            mobileMenuBtn.addEventListener('click', toggleMenu);
+
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (menuOpen) toggleMenu();
+                });
+            });
+        }
